@@ -13,6 +13,7 @@ import pandas as pd
 
 from parityscope import FairnessAudit
 from parityscope.reports.generator import generate_json_report, generate_summary
+from parityscope.reports.pdf_report import generate_pdf_report
 from parityscope.simulation.interventions import compare_interventions
 
 
@@ -238,6 +239,13 @@ def main():
     with open(report_path, "w") as f:
         f.write(generate_json_report(result_eu))
     print(f"Full JSON report saved to: {report_path}")
+
+    # ---------------------------------------------------------------
+    # EXPORT: Save PDF report
+    # ---------------------------------------------------------------
+    pdf_path = "audit_report.pdf"
+    generate_pdf_report(result_eu, output_path=pdf_path)
+    print(f"PDF report saved to:       {pdf_path}")
     print()
     print("Done! Review the audit results above to see how bias manifests")
     print("across demographic groups in this simulated clinical AI model.")
