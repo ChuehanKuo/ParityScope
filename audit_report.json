@@ -1,0 +1,317 @@
+{
+  "audit_id": "1d526d38-be25-4c57-90a9-b7ff7d662b23",
+  "model_name": "sepsis_risk_v2.1",
+  "timestamp": "2026-02-23T13:04:45.455542+00:00",
+  "protected_attributes": [
+    "race"
+  ],
+  "metrics_evaluated": [
+    "equal_opportunity",
+    "false_negative_rate_parity",
+    "predictive_parity",
+    "calibration_difference",
+    "demographic_parity",
+    "equalized_odds",
+    "false_positive_rate_parity",
+    "accuracy_parity"
+  ],
+  "jurisdiction": "eu-ai-act",
+  "clinical_domain": "diagnosis",
+  "thresholds": {
+    "fair": 0.05,
+    "marginal": 0.1
+  },
+  "overall_fairness": "unfair",
+  "total_samples": 5000,
+  "group_counts": {
+    "race:Asian": 493,
+    "race:Black": 966,
+    "race:Hispanic": 747,
+    "race:White": 2794
+  },
+  "summary": {
+    "total_metrics": 8,
+    "fair": 1,
+    "marginal": 0,
+    "unfair": 7
+  },
+  "metric_results": [
+    {
+      "metric_name": "race:equal_opportunity",
+      "display_name": "Equal Opportunity (race)",
+      "disparity": 0.22798216276477146,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Asian",
+          "rate": 0.9571428571428572,
+          "sample_size": 493
+        },
+        {
+          "group": "Black",
+          "rate": 0.7463768115942029,
+          "sample_size": 966
+        },
+        {
+          "group": "Hispanic",
+          "rate": 0.8666666666666667,
+          "sample_size": 747
+        },
+        {
+          "group": "White",
+          "rate": 0.9743589743589743,
+          "sample_size": 2794
+        }
+      ]
+    },
+    {
+      "metric_name": "race:false_negative_rate_parity",
+      "display_name": "False Negative Rate Parity (race)",
+      "disparity": 0.22798216276477148,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Asian",
+          "rate": 0.04285714285714286,
+          "sample_size": 493
+        },
+        {
+          "group": "Black",
+          "rate": 0.2536231884057971,
+          "sample_size": 966
+        },
+        {
+          "group": "Hispanic",
+          "rate": 0.13333333333333333,
+          "sample_size": 747
+        },
+        {
+          "group": "White",
+          "rate": 0.02564102564102564,
+          "sample_size": 2794
+        }
+      ]
+    },
+    {
+      "metric_name": "race:predictive_parity",
+      "display_name": "Predictive Parity (race)",
+      "disparity": 0.4377284148012791,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Asian",
+          "rate": 0.881578947368421,
+          "sample_size": 493
+        },
+        {
+          "group": "Black",
+          "rate": 0.824,
+          "sample_size": 966
+        },
+        {
+          "group": "Hispanic",
+          "rate": 0.5170454545454546,
+          "sample_size": 747
+        },
+        {
+          "group": "White",
+          "rate": 0.9547738693467337,
+          "sample_size": 2794
+        }
+      ]
+    },
+    {
+      "metric_name": "race:calibration_difference",
+      "display_name": "Calibration Difference (race)",
+      "disparity": 0.022743948373538547,
+      "fairness_level": "fair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Asian",
+          "rate": 0.19869782932731134,
+          "sample_size": 493
+        },
+        {
+          "group": "Black",
+          "rate": 0.18657414953873785,
+          "sample_size": 966
+        },
+        {
+          "group": "Hispanic",
+          "rate": 0.19551981032265858,
+          "sample_size": 747
+        },
+        {
+          "group": "White",
+          "rate": 0.2093180979122764,
+          "sample_size": 2794
+        }
+      ]
+    },
+    {
+      "metric_name": "race:demographic_parity",
+      "display_name": "Demographic Parity (race)",
+      "disparity": 0.10620951715765753,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Asian",
+          "rate": 0.15415821501014199,
+          "sample_size": 493
+        },
+        {
+          "group": "Black",
+          "rate": 0.12939958592132506,
+          "sample_size": 966
+        },
+        {
+          "group": "Hispanic",
+          "rate": 0.23560910307898258,
+          "sample_size": 747
+        },
+        {
+          "group": "White",
+          "rate": 0.14244810307802433,
+          "sample_size": 2794
+        }
+      ]
+    },
+    {
+      "metric_name": "race:equalized_odds",
+      "display_name": "Equalized Odds (race)",
+      "disparity": 0.22798216276477146,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Asian",
+          "rate": 0.9571428571428572,
+          "sample_size": 493
+        },
+        {
+          "group": "Black",
+          "rate": 0.7463768115942029,
+          "sample_size": 966
+        },
+        {
+          "group": "Hispanic",
+          "rate": 0.8666666666666667,
+          "sample_size": 747
+        },
+        {
+          "group": "White",
+          "rate": 0.9743589743589743,
+          "sample_size": 2794
+        }
+      ]
+    },
+    {
+      "metric_name": "race:false_positive_rate_parity",
+      "display_name": "False Positive Rate Parity (race)",
+      "disparity": 0.1249112330954121,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Asian",
+          "rate": 0.02127659574468085,
+          "sample_size": 493
+        },
+        {
+          "group": "Black",
+          "rate": 0.026570048309178744,
+          "sample_size": 966
+        },
+        {
+          "group": "Hispanic",
+          "rate": 0.13239875389408098,
+          "sample_size": 747
+        },
+        {
+          "group": "White",
+          "rate": 0.0074875207986688855,
+          "sample_size": 2794
+        }
+      ]
+    },
+    {
+      "metric_name": "race:accuracy_parity",
+      "display_name": "Accuracy Parity (race)",
+      "disparity": 0.12250864589352395,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Asian",
+          "rate": 0.9756592292089249,
+          "sample_size": 493
+        },
+        {
+          "group": "Black",
+          "rate": 0.9409937888198758,
+          "sample_size": 966
+        },
+        {
+          "group": "Hispanic",
+          "rate": 0.8674698795180723,
+          "sample_size": 747
+        },
+        {
+          "group": "White",
+          "rate": 0.9899785254115963,
+          "sample_size": 2794
+        }
+      ]
+    }
+  ],
+  "compliance": {
+    "jurisdiction": "eu-ai-act",
+    "requirements": [
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 9",
+        "requirement": "Risk management system",
+        "description": "Establish and maintain a risk management system throughout the AI system lifecycle, including identification and analysis of known and foreseeable risks of bias",
+        "evidence_needed": "Risk management documentation with bias risk analysis",
+        "status": "action_required"
+      },
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 10",
+        "requirement": "Data governance",
+        "description": "Training, validation, and testing datasets shall be subject to data governance practices including examination for possible biases",
+        "evidence_needed": "Data governance report with bias examination results",
+        "status": "action_required"
+      },
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 15",
+        "requirement": "Accuracy, robustness, cybersecurity",
+        "description": "High-risk AI systems shall be designed to achieve appropriate levels of accuracy and shall perform consistently across groups",
+        "evidence_needed": "Fairness audit report with per-group performance metrics",
+        "status": "action_required"
+      },
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 13",
+        "requirement": "Transparency",
+        "description": "High-risk AI systems shall be designed to enable users to interpret the output and use it appropriately",
+        "evidence_needed": "Model documentation with fairness metric explanations",
+        "status": "action_required"
+      },
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 61",
+        "requirement": "Post-market monitoring",
+        "description": "Providers shall establish a post-market monitoring system to continuously evaluate fairness throughout the system lifecycle",
+        "evidence_needed": "Continuous monitoring dashboard with fairness drift alerts",
+        "status": "action_required"
+      }
+    ]
+  }
+}
