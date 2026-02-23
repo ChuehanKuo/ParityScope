@@ -47,14 +47,14 @@ SEED = 42
 
 # NHANES XPT file URLs for 2017-2018
 NHANES_URLS = {
-    "demographics": "https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/DEMO_J.XPT",
-    "blood_pressure": "https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/BPX_J.XPT",
-    "body_measures": "https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/BMX_J.XPT",
-    "diabetes": "https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/DIQ_J.XPT",
-    "cholesterol_total": "https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/TCHOL_J.XPT",
-    "cholesterol_hdl": "https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/HDL_J.XPT",
-    "smoking": "https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/SMQ_J.XPT",
-    "kidney": "https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/KIQ_U_J.XPT",
+    "demographics": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DEMO_J.XPT",
+    "blood_pressure": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/BPX_J.XPT",
+    "body_measures": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/BMX_J.XPT",
+    "diabetes": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DIQ_J.XPT",
+    "cholesterol_total": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/TCHOL_J.XPT",
+    "cholesterol_hdl": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HDL_J.XPT",
+    "smoking": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SMQ_J.XPT",
+    "kidney": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/KIQ_U_J.XPT",
 }
 
 
