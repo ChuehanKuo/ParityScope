@@ -22,6 +22,8 @@ Demographics available: Race/Ethnicity, Sex, Age Group
 
 import io
 import sys
+import tempfile
+import urllib.request
 from pathlib import Path
 
 import numpy as np
@@ -68,7 +70,10 @@ def download_nhanes_data() -> pd.DataFrame:
     for name, url in NHANES_URLS.items():
         print(f"    Fetching {name}...")
         try:
-            df = pd.read_sas(url)
+            # Download to a temp file first, then read with pandas
+            with tempfile.NamedTemporaryFile(suffix=".xpt", delete=False) as tmp:
+                urllib.request.urlretrieve(url, tmp.name)
+                df = pd.read_sas(tmp.name, format="xport")
             dfs[name] = df
             print(f"      -> {len(df)} records, {len(df.columns)} columns")
         except Exception as e:
