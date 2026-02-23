@@ -152,6 +152,9 @@ def prepare_dataset(raw: pd.DataFrame) -> tuple[pd.DataFrame, np.ndarray, pd.Dat
             5: "Other/Multi-Racial",
         }
 
+    # Reset index so all new DataFrames align on 0-based integer index
+    df = df.reset_index(drop=True)
+
     demographics = pd.DataFrame()
     demographics["race"] = df[race_col].map(race_map).fillna("Other/Multi-Racial")
 
