@@ -70,9 +70,11 @@ def download_nhanes_data() -> pd.DataFrame:
     for name, url in NHANES_URLS.items():
         print(f"    Fetching {name}...")
         try:
-            # Download to a temp file first, then read with pandas
+            # Download to a temp file with browser-like headers (CDC blocks plain urllib)
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
             with tempfile.NamedTemporaryFile(suffix=".xpt", delete=False) as tmp:
-                urllib.request.urlretrieve(url, tmp.name)
+                with urllib.request.urlopen(req) as resp:
+                    tmp.write(resp.read())
                 df = pd.read_sas(tmp.name, format="xport")
             dfs[name] = df
             print(f"      -> {len(df)} records, {len(df.columns)} columns")
