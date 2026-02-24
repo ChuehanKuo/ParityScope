@@ -1,0 +1,472 @@
+{
+  "audit_id": "5e98b3b8-bf8a-4c16-a9d1-e3bd29901441",
+  "model_name": "physionet2019_sepsis_logreg",
+  "timestamp": "2026-02-24T07:49:57.186269+00:00",
+  "protected_attributes": [
+    "sex",
+    "age_group"
+  ],
+  "metrics_evaluated": [
+    "equal_opportunity",
+    "false_negative_rate_parity",
+    "predictive_parity",
+    "calibration_difference",
+    "demographic_parity",
+    "equalized_odds",
+    "false_positive_rate_parity",
+    "accuracy_parity"
+  ],
+  "jurisdiction": "eu-ai-act",
+  "clinical_domain": "diagnosis",
+  "thresholds": {
+    "fair": 0.05,
+    "marginal": 0.1
+  },
+  "overall_fairness": "unfair",
+  "total_samples": 1288,
+  "group_counts": {
+    "sex:Female": 562,
+    "sex:Male": 726,
+    "age_group:18-39": 141,
+    "age_group:40-59": 433,
+    "age_group:60-79": 560,
+    "age_group:80+": 154
+  },
+  "summary": {
+    "total_metrics": 16,
+    "fair": 5,
+    "marginal": 6,
+    "unfair": 5
+  },
+  "metric_results": [
+    {
+      "metric_name": "sex:equal_opportunity",
+      "display_name": "Equal Opportunity (sex)",
+      "disparity": 0.07272727272727275,
+      "fairness_level": "marginal",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Female",
+          "rate": 0.6,
+          "sample_size": 562
+        },
+        {
+          "group": "Male",
+          "rate": 0.5272727272727272,
+          "sample_size": 726
+        }
+      ]
+    },
+    {
+      "metric_name": "sex:false_negative_rate_parity",
+      "display_name": "False Negative Rate Parity (sex)",
+      "disparity": 0.0727272727272727,
+      "fairness_level": "marginal",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Female",
+          "rate": 0.4,
+          "sample_size": 562
+        },
+        {
+          "group": "Male",
+          "rate": 0.4727272727272727,
+          "sample_size": 726
+        }
+      ]
+    },
+    {
+      "metric_name": "sex:predictive_parity",
+      "display_name": "Predictive Parity (sex)",
+      "disparity": 0.012536633018560728,
+      "fairness_level": "fair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Female",
+          "rate": 0.16216216216216217,
+          "sample_size": 562
+        },
+        {
+          "group": "Male",
+          "rate": 0.1746987951807229,
+          "sample_size": 726
+        }
+      ]
+    },
+    {
+      "metric_name": "sex:calibration_difference",
+      "display_name": "Calibration Difference (sex)",
+      "disparity": 0.006426036898483201,
+      "fairness_level": "fair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Female",
+          "rate": 0.39428779131185676,
+          "sample_size": 562
+        },
+        {
+          "group": "Male",
+          "rate": 0.38786175441337356,
+          "sample_size": 726
+        }
+      ]
+    },
+    {
+      "metric_name": "sex:demographic_parity",
+      "display_name": "Demographic Parity (sex)",
+      "disparity": 0.03114124094389381,
+      "fairness_level": "fair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Female",
+          "rate": 0.19750889679715303,
+          "sample_size": 562
+        },
+        {
+          "group": "Male",
+          "rate": 0.22865013774104684,
+          "sample_size": 726
+        }
+      ]
+    },
+    {
+      "metric_name": "sex:equalized_odds",
+      "display_name": "Equalized Odds (sex)",
+      "disparity": 0.07272727272727275,
+      "fairness_level": "marginal",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Female",
+          "rate": 0.6,
+          "sample_size": 562
+        },
+        {
+          "group": "Male",
+          "rate": 0.5272727272727272,
+          "sample_size": 726
+        }
+      ]
+    },
+    {
+      "metric_name": "sex:false_positive_rate_parity",
+      "display_name": "False Positive Rate Parity (sex)",
+      "disparity": 0.029360846228835863,
+      "fairness_level": "fair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Female",
+          "rate": 0.17481203007518797,
+          "sample_size": 562
+        },
+        {
+          "group": "Male",
+          "rate": 0.20417287630402384,
+          "sample_size": 726
+        }
+      ]
+    },
+    {
+      "metric_name": "sex:accuracy_parity",
+      "display_name": "Accuracy Parity (sex)",
+      "disparity": 0.037685166122565006,
+      "fairness_level": "fair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "Female",
+          "rate": 0.8131672597864769,
+          "sample_size": 562
+        },
+        {
+          "group": "Male",
+          "rate": 0.7754820936639119,
+          "sample_size": 726
+        }
+      ]
+    },
+    {
+      "metric_name": "age_group:equal_opportunity",
+      "display_name": "Equal Opportunity (age_group)",
+      "disparity": 0.0757575757575758,
+      "fairness_level": "marginal",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "18-39",
+          "rate": 0.5,
+          "sample_size": 141
+        },
+        {
+          "group": "40-59",
+          "rate": 0.5757575757575758,
+          "sample_size": 433
+        },
+        {
+          "group": "60-79",
+          "rate": 0.5526315789473685,
+          "sample_size": 560
+        },
+        {
+          "group": "80+",
+          "rate": 0.5,
+          "sample_size": 154
+        }
+      ]
+    },
+    {
+      "metric_name": "age_group:false_negative_rate_parity",
+      "display_name": "False Negative Rate Parity (age_group)",
+      "disparity": 0.07575757575757575,
+      "fairness_level": "marginal",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "18-39",
+          "rate": 0.5,
+          "sample_size": 141
+        },
+        {
+          "group": "40-59",
+          "rate": 0.42424242424242425,
+          "sample_size": 433
+        },
+        {
+          "group": "60-79",
+          "rate": 0.4473684210526316,
+          "sample_size": 560
+        },
+        {
+          "group": "80+",
+          "rate": 0.5,
+          "sample_size": 154
+        }
+      ]
+    },
+    {
+      "metric_name": "age_group:predictive_parity",
+      "display_name": "Predictive Parity (age_group)",
+      "disparity": 0.1133919843597263,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "18-39",
+          "rate": 0.125,
+          "sample_size": 141
+        },
+        {
+          "group": "40-59",
+          "rate": 0.20430107526881722,
+          "sample_size": 433
+        },
+        {
+          "group": "60-79",
+          "rate": 0.1810344827586207,
+          "sample_size": 560
+        },
+        {
+          "group": "80+",
+          "rate": 0.09090909090909091,
+          "sample_size": 154
+        }
+      ]
+    },
+    {
+      "metric_name": "age_group:calibration_difference",
+      "display_name": "Calibration Difference (age_group)",
+      "disparity": 0.09271875288453524,
+      "fairness_level": "marginal",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "18-39",
+          "rate": 0.41565673565556305,
+          "sample_size": 141
+        },
+        {
+          "group": "40-59",
+          "rate": 0.36646509020432994,
+          "sample_size": 433
+        },
+        {
+          "group": "60-79",
+          "rate": 0.38062034259033517,
+          "sample_size": 560
+        },
+        {
+          "group": "80+",
+          "rate": 0.4591838430888652,
+          "sample_size": 154
+        }
+      ]
+    },
+    {
+      "metric_name": "age_group:demographic_parity",
+      "display_name": "Demographic Parity (age_group)",
+      "disparity": 0.1155015197568389,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "18-39",
+          "rate": 0.1702127659574468,
+          "sample_size": 141
+        },
+        {
+          "group": "40-59",
+          "rate": 0.21478060046189376,
+          "sample_size": 433
+        },
+        {
+          "group": "60-79",
+          "rate": 0.20714285714285716,
+          "sample_size": 560
+        },
+        {
+          "group": "80+",
+          "rate": 0.2857142857142857,
+          "sample_size": 154
+        }
+      ]
+    },
+    {
+      "metric_name": "age_group:equalized_odds",
+      "display_name": "Equalized Odds (age_group)",
+      "disparity": 0.11841704718417045,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "18-39",
+          "rate": 0.5,
+          "sample_size": 141
+        },
+        {
+          "group": "40-59",
+          "rate": 0.5757575757575758,
+          "sample_size": 433
+        },
+        {
+          "group": "60-79",
+          "rate": 0.5526315789473685,
+          "sample_size": 560
+        },
+        {
+          "group": "80+",
+          "rate": 0.5,
+          "sample_size": 154
+        }
+      ]
+    },
+    {
+      "metric_name": "age_group:false_positive_rate_parity",
+      "display_name": "False Positive Rate Parity (age_group)",
+      "disparity": 0.11841704718417045,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "18-39",
+          "rate": 0.15555555555555556,
+          "sample_size": 141
+        },
+        {
+          "group": "40-59",
+          "rate": 0.185,
+          "sample_size": 433
+        },
+        {
+          "group": "60-79",
+          "rate": 0.18199233716475097,
+          "sample_size": 560
+        },
+        {
+          "group": "80+",
+          "rate": 0.273972602739726,
+          "sample_size": 154
+        }
+      ]
+    },
+    {
+      "metric_name": "age_group:accuracy_parity",
+      "display_name": "Accuracy Parity (age_group)",
+      "disparity": 0.11550151975683887,
+      "fairness_level": "unfair",
+      "threshold": 0.1,
+      "group_results": [
+        {
+          "group": "18-39",
+          "rate": 0.8297872340425532,
+          "sample_size": 141
+        },
+        {
+          "group": "40-59",
+          "rate": 0.7967667436489607,
+          "sample_size": 433
+        },
+        {
+          "group": "60-79",
+          "rate": 0.8,
+          "sample_size": 560
+        },
+        {
+          "group": "80+",
+          "rate": 0.7142857142857143,
+          "sample_size": 154
+        }
+      ]
+    }
+  ],
+  "compliance": {
+    "jurisdiction": "eu-ai-act",
+    "requirements": [
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 9",
+        "requirement": "Risk management system",
+        "description": "Establish and maintain a risk management system throughout the AI system lifecycle, including identification and analysis of known and foreseeable risks of bias",
+        "evidence_needed": "Risk management documentation with bias risk analysis",
+        "status": "action_required"
+      },
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 10",
+        "requirement": "Data governance",
+        "description": "Training, validation, and testing datasets shall be subject to data governance practices including examination for possible biases",
+        "evidence_needed": "Data governance report with bias examination results",
+        "status": "action_required"
+      },
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 15",
+        "requirement": "Accuracy, robustness, cybersecurity",
+        "description": "High-risk AI systems shall be designed to achieve appropriate levels of accuracy and shall perform consistently across groups",
+        "evidence_needed": "Fairness audit report with per-group performance metrics",
+        "status": "action_required"
+      },
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 13",
+        "requirement": "Transparency",
+        "description": "High-risk AI systems shall be designed to enable users to interpret the output and use it appropriately",
+        "evidence_needed": "Model documentation with fairness metric explanations",
+        "status": "action_required"
+      },
+      {
+        "regulation": "EU AI Act",
+        "article": "Article 61",
+        "requirement": "Post-market monitoring",
+        "description": "Providers shall establish a post-market monitoring system to continuously evaluate fairness throughout the system lifecycle",
+        "evidence_needed": "Continuous monitoring dashboard with fairness drift alerts",
+        "status": "action_required"
+      }
+    ]
+  }
+}

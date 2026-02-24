@@ -40,3 +40,6 @@ next-env.d.ts
 
 # Vercel
 .vercel
+
+# PhysioNet / external datasets
+engine/data/
