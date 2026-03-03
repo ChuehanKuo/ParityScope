@@ -43,7 +43,7 @@ const whitepapers = [
     ],
   },
   {
-    title: "Intersectional Bias in Clinical Decision Support Systems",
+    title: "Intersectional Bias in Clinical Decision Support",
     description:
       "Original research from ParityScope's data science team examining how single-attribute fairness analysis fails to detect critical disparities in clinical decision support (CDS) systems. Using de-identified data from three health systems, this paper demonstrates that CDS algorithms can appear fair when evaluated along individual demographic axes while producing significant adverse outcomes for patients at the intersection of multiple protected attributes — for example, elderly Hispanic women or young Black men with disabilities. Introduces a practical methodology for intersectional fairness evaluation that scales to clinical populations.",
     pages: 36,

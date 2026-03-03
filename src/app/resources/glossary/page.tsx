@@ -1,125 +1,114 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SectionHeader } from "@/components/ui/section-header";
-import { Accordion } from "@/components/ui/accordion";
 import { CTASection } from "@/components/ui/cta-section";
 
 export const metadata: Metadata = {
   title: "Glossary — AI Fairness & Healthcare Compliance Terminology",
   description:
-    "Comprehensive glossary of AI fairness, bias, healthcare compliance, and regulatory terminology. Definitions for demographic parity, equalized odds, disparate impact, fairness drift, and more.",
+    "Comprehensive glossary of AI fairness, algorithmic bias, healthcare compliance, and regulatory terminology. Definitions for demographic parity, disparate impact, EU AI Act, Section 1557, and more.",
 };
 
 const glossaryTerms = [
   {
     term: "Algorithmic Fairness",
+    letter: "A",
     definition:
-      "The study and practice of ensuring that automated decision-making systems do not produce systematically biased outcomes across different demographic groups. In healthcare, algorithmic fairness requires that clinical AI models perform equitably across race, gender, age, and socioeconomic status, so that no patient population receives systematically inferior predictions or recommendations.",
+      "The study and practice of ensuring that automated decision-making systems do not produce systematically biased outcomes across different demographic groups. In healthcare, algorithmic fairness is concerned with whether clinical AI systems provide equitable predictions, recommendations, and decisions regardless of a patient's race, gender, age, socioeconomic status, or other protected attributes. Algorithmic fairness is not a single property but a family of related mathematical criteria, each encoding a different normative concept of what it means for an algorithm to be 'fair.'",
+  },
+  {
+    term: "Bias",
+    letter: "B",
+    definition:
+      "In the context of AI and machine learning, bias refers to systematic errors in a model's predictions that disproportionately affect certain groups. Bias can enter a model through multiple pathways: historical bias in training data that reflects past discrimination, representation bias from datasets that underrepresent certain populations, measurement bias from features that are collected or recorded differently across groups, and aggregation bias from models that assume a one-size-fits-all relationship across heterogeneous populations. In clinical AI, bias is a patient safety concern because it can lead to missed diagnoses, delayed treatment, or inequitable resource allocation.",
   },
   {
     term: "Calibration",
+    letter: "C",
     definition:
-      "A fairness metric that evaluates whether predicted probabilities match observed outcomes equally across demographic groups. A well-calibrated model assigns a 70% risk score to patients who actually have a 70% chance of the outcome, regardless of their demographic group. Poor calibration across groups means the model's confidence scores are systematically misleading for certain populations.",
+      "A property of a predictive model where the predicted probabilities accurately reflect the true likelihood of the outcome. A well-calibrated sepsis prediction model that assigns a 30% risk score to a group of patients should see approximately 30% of those patients actually develop sepsis. Calibration fairness requires that this accuracy holds across all demographic subgroups — meaning a 30% risk score carries the same clinical meaning for Black patients as it does for White patients, for men as it does for women. Poor calibration across groups means the same score implies different levels of risk for different patients.",
   },
   {
-    term: "Conditional Demographic Parity",
+    term: "Clinical Decision Support",
+    letter: "C",
     definition:
-      "A refinement of demographic parity that requires equal positive prediction rates across groups after controlling for legitimate risk factors. This metric acknowledges that outcome rates may genuinely differ across populations due to clinical factors, and measures whether the model's predictions remain fair after accounting for those differences.",
-  },
-  {
-    term: "Counterfactual Fairness",
-    definition:
-      "A causal-inference-based fairness criterion that asks whether a model's prediction for an individual would remain the same if their protected attribute (such as race or gender) were different, while all other causally relevant factors remained the same. This metric requires a causal model of the data-generating process and addresses individual-level rather than group-level fairness.",
+      "Health information technology systems designed to assist clinicians in making diagnostic, therapeutic, and care management decisions. CDS systems include risk scoring models, diagnostic algorithms, treatment recommendation engines, drug interaction checkers, and population health stratification tools. When powered by AI or machine learning, CDS systems are subject to algorithmic bias and are increasingly subject to regulatory oversight under the EU AI Act, FDA guidance, and Section 1557 of the Affordable Care Act.",
   },
   {
     term: "Demographic Parity",
+    letter: "D",
     definition:
-      "A group fairness metric requiring that the positive prediction rate is equal across all protected groups. For example, if a clinical risk model flags 20% of white patients as high-risk, demographic parity requires it to also flag approximately 20% of Black, Hispanic, and other racial groups. Also known as statistical parity or independence.",
+      "A group fairness metric that requires the positive prediction rate (the proportion of individuals who receive a positive outcome from the model) to be equal across all protected groups. For example, demographic parity for a care management enrollment model would require that the same proportion of Black, White, Hispanic, and Asian patients are flagged as high-risk. While intuitive, demographic parity has important limitations in clinical AI: if disease prevalence genuinely differs across populations, enforcing equal prediction rates can lead to under-treatment of higher-risk groups or over-treatment of lower-risk groups.",
   },
   {
     term: "Disparate Impact",
+    letter: "D",
     definition:
-      "A legal and statistical concept describing when a seemingly neutral policy, practice, or algorithm disproportionately affects a protected group, even without intent to discriminate. The four-fifths rule is a common threshold: if a selection rate for a protected group is less than 80% of the rate for the most favored group, disparate impact may be present. In healthcare AI, disparate impact can manifest as lower sensitivity, higher false negative rates, or reduced resource allocation for disadvantaged populations.",
+      "A legal and statistical concept describing when a facially neutral policy, practice, or algorithm disproportionately affects a protected group, even without discriminatory intent. Originally developed in employment discrimination law (Griggs v. Duke Power Co., 1971), disparate impact analysis has been applied to healthcare algorithms under Section 1557 of the Affordable Care Act and civil rights law. The four-fifths rule, commonly used in employment, states that disparate impact exists when the selection rate for a protected group is less than 80% of the rate for the most-favored group. ParityScope evaluates disparate impact ratios across all protected attributes.",
   },
   {
     term: "Equal Opportunity",
+    letter: "E",
     definition:
-      "A fairness metric requiring that the true positive rate (sensitivity or recall) is equal across all protected groups. In clinical terms, this means the model should be equally good at correctly identifying patients who truly have a condition, regardless of their demographic group. A model that detects cancer in 90% of white patients but only 70% of Black patients violates equal opportunity.",
+      "A fairness metric requiring that the true positive rate (sensitivity or recall) is equal across all protected groups. In clinical AI, equal opportunity means that among patients who truly have a condition (e.g., sepsis, cancer, high cardiovascular risk), the model is equally likely to correctly identify them regardless of their demographic group. This metric is particularly important for diagnostic and screening models where a false negative — failing to identify a patient who needs intervention — has severe clinical consequences.",
   },
   {
     term: "Equalized Odds",
+    letter: "E",
     definition:
-      "A stricter fairness metric requiring that both the true positive rate and the false positive rate are equal across all protected groups. This means the model should have the same sensitivity and specificity for every demographic group. Equalized odds is more demanding than equal opportunity because it constrains both types of error, ensuring that no group bears a disproportionate burden of either missed diagnoses or false alarms.",
+      "A fairness metric that is stricter than equal opportunity, requiring that both the true positive rate and the false positive rate are equal across all protected groups. Equalized odds ensures that the model is equally accurate for all groups in both directions: it is equally likely to correctly identify patients who need intervention (true positives) and equally likely to correctly rule out patients who do not (true negatives). This metric is often considered more appropriate for clinical AI than demographic parity because it accounts for potentially different base rates across populations.",
   },
   {
-    term: "Fairness Drift",
+    term: "EU AI Act",
+    letter: "E",
     definition:
-      "The phenomenon where an AI model's fairness metrics degrade over time as the underlying data distribution shifts. Even a model that passes fairness audits at deployment can develop demographic disparities as patient populations change, clinical practices evolve, or data pipelines are modified. Continuous monitoring is essential to detect fairness drift before it causes harm. Causes include seasonal variations in patient demographics, changes in coding practices, and socioeconomic shifts in the served population.",
+      "The European Union's comprehensive regulatory framework for artificial intelligence, adopted in 2024. The EU AI Act classifies AI systems by risk level, with healthcare AI systems designated as high-risk in Annex III. High-risk AI systems must meet requirements for risk management, data governance, transparency, human oversight, accuracy, robustness, and cybersecurity. Critically, Article 10 requires providers to examine training data for biases and to take appropriate measures to detect, prevent, and mitigate potential discrimination. Non-compliance can result in fines up to EUR 35 million or 7% of global annual turnover.",
   },
   {
-    term: "Fairness-Accuracy Trade-off",
+    term: "Fairness Metric",
+    letter: "F",
     definition:
-      "The observation that optimizing a model for certain fairness metrics may reduce its overall predictive accuracy, and vice versa. This trade-off is not always present and depends on the specific metrics, the data, and the model architecture. In clinical settings, navigating this trade-off requires input from clinicians, ethicists, and affected communities to determine acceptable thresholds. ParityScope helps quantify these trade-offs so organizations can make informed decisions.",
+      "A quantitative measure used to evaluate whether an AI system's outcomes satisfy a specific definition of fairness. There are many fairness metrics, each encoding different normative assumptions about what constitutes equitable treatment. Common metrics include demographic parity, equalized odds, equal opportunity, predictive parity, calibration, and individual fairness measures. An important result in fairness research (the impossibility theorem) demonstrates that most fairness metrics cannot be simultaneously satisfied except in trivial cases, making the choice of which metrics to optimize a value judgment that should be informed by clinical context, regulatory requirements, and stakeholder input.",
   },
   {
-    term: "Group Fairness",
+    term: "High-Risk AI",
+    letter: "H",
     definition:
-      "A category of fairness criteria that evaluate whether a model's behavior is equitable across predefined demographic groups, such as racial, gender, or age groups. Metrics like demographic parity, equalized odds, and calibration are all group fairness measures. Group fairness is contrasted with individual fairness, which requires that similar individuals receive similar predictions regardless of group membership.",
+      "Under the EU AI Act, AI systems that pose significant risks to health, safety, or fundamental rights. Healthcare AI is classified as high-risk in Annex III, Section 5, which covers AI systems intended to be used as medical devices or in vitro diagnostic medical devices. High-risk AI systems are subject to the most stringent requirements of the regulation, including mandatory conformity assessment, registration in the EU database, post-market monitoring, and incident reporting. Health systems, MedTech companies, and EHR vendors deploying clinical AI in the EU must ensure their systems comply with all high-risk requirements.",
   },
   {
-    term: "Intersectional Fairness",
+    term: "Intersectional Analysis",
+    letter: "I",
     definition:
-      "The evaluation of model fairness across combinations of protected attributes, such as examining outcomes for Black women or elderly Hispanic patients, rather than evaluating race and gender independently. Single-attribute fairness analysis can mask disparities that emerge only at the intersection of multiple identities. Intersectional analysis is critical because patients exist at the intersection of multiple demographic categories, and bias often compounds across these dimensions.",
+      "A fairness evaluation approach that examines model performance across combinations of protected attributes rather than evaluating each attribute independently. Intersectional analysis recognizes that patients exist at the intersection of multiple identities (e.g., race and gender, age and disability status) and that a model can appear fair along each individual dimension while producing significant disparities for specific subgroups. For example, a model might show equitable performance for Black patients overall and for women overall, but perform poorly for Black women specifically. Intersectional analysis is critical in clinical AI because health disparities are often concentrated at these intersections.",
   },
   {
-    term: "Model Card",
+    term: "Model Drift",
+    letter: "M",
     definition:
-      "A standardized documentation framework for machine learning models that includes information about the model's intended use, performance metrics, fairness evaluations, training data characteristics, and known limitations. Model cards are increasingly required by regulators and are a key component of responsible AI deployment. The EU AI Act mandates comparable documentation for high-risk AI systems, including healthcare applications.",
-  },
-  {
-    term: "Positive Predictive Value Parity",
-    definition:
-      "A fairness metric requiring that the precision (positive predictive value) is equal across all protected groups. This means that when the model predicts a positive outcome for a patient, the probability that the prediction is correct should be the same regardless of the patient's demographic group. In clinical terms, a positive screening result should carry the same diagnostic weight for all populations.",
-  },
-  {
-    term: "Predictive Parity",
-    definition:
-      "A fairness metric requiring that the positive predictive value and negative predictive value are equal across all protected groups. This ensures that the model's predictions are equally reliable for every demographic group. A model with predictive parity gives clinicians the same level of confidence in its outputs regardless of the patient's background.",
+      "The phenomenon where a deployed model's performance degrades over time as the real-world data it encounters diverges from the data it was trained on. In the context of fairness, model drift can cause a model that was initially fair to develop biased outcomes as patient populations change, clinical practices evolve, or data collection processes shift. Fairness drift is particularly insidious because it can occur even when overall model accuracy remains stable — the model may maintain aggregate performance while developing disparities within specific subgroups. Continuous fairness monitoring is essential to detect fairness drift before it impacts patient outcomes.",
   },
   {
     term: "Protected Attribute",
+    letter: "P",
     definition:
-      "A characteristic of an individual that is legally protected from discrimination and must be evaluated in AI fairness assessments. Common protected attributes include race, ethnicity, gender, age, disability status, religion, and socioeconomic status. In healthcare AI, protected attributes are the dimensions along which fairness must be measured and ensured. The specific attributes and their legal protections vary by jurisdiction.",
+      "A characteristic of an individual that is legally protected from discrimination. In healthcare AI, key protected attributes include race, ethnicity, sex, gender identity, age, disability status, national origin, primary language, religion, and socioeconomic status. Different regulatory frameworks protect different attributes: the EU AI Act focuses on attributes protected under EU non-discrimination law, while Section 1557 of the ACA protects race, color, national origin, sex, age, and disability. Fairness auditing evaluates model performance across all relevant protected attributes to identify potential discrimination.",
   },
   {
-    term: "Proxy Variable",
+    term: "Section 1557",
+    letter: "S",
     definition:
-      "A feature in a dataset that is correlated with a protected attribute and can serve as an indirect proxy for it, even when the protected attribute itself is not included in the model. ZIP code can serve as a proxy for race, insurance type can proxy for socioeconomic status, and language preference can proxy for ethnicity. Removing protected attributes from a model does not guarantee fairness if proxy variables remain.",
+      "Section 1557 of the Affordable Care Act is the primary federal civil rights provision prohibiting discrimination in healthcare programs and activities receiving federal financial assistance. It prohibits discrimination on the basis of race, color, national origin, sex (including sexual orientation and gender identity), age, and disability. Recent regulatory guidance has clarified that Section 1557 applies to clinical algorithms and AI-driven decision-making tools used by covered entities. Healthcare organizations that use biased algorithms to make coverage, treatment, or resource allocation decisions may face enforcement action under Section 1557, making fairness auditing a legal compliance requirement, not just an ethical best practice.",
   },
   {
-    term: "Subgroup Analysis",
+    term: "Threshold",
+    letter: "T",
     definition:
-      "The evaluation of model performance and fairness metrics separately for each demographic subgroup within the data. Standard aggregate metrics can mask significant disparities across populations. A model with 85% overall accuracy might achieve 95% accuracy for one group and 65% for another. Subgroup analysis is essential for identifying these hidden inequities and is a core requirement of regulatory frameworks like the EU AI Act.",
+      "In classification models, the decision boundary that converts a continuous risk score into a binary prediction (e.g., high-risk vs. low-risk, positive vs. negative). Threshold selection has significant fairness implications: a single threshold applied uniformly across all demographic groups can produce disparate outcomes if the model's score distributions differ across groups. Threshold optimization strategies include group-specific thresholds (calibrating the decision boundary to equalize outcomes or error rates across groups), but these approaches introduce their own ethical and clinical trade-offs. ParityScope evaluates fairness across the full threshold range and helps teams select thresholds that balance clinical performance with equity goals.",
   },
 ];
 
-const faqItems = [
-  {
-    question: "Can a model satisfy all fairness metrics simultaneously?",
-    answer:
-      "In most real-world scenarios, no. The impossibility theorem in algorithmic fairness demonstrates that certain fairness metrics are mathematically incompatible when base rates differ across groups. For example, a model generally cannot achieve equalized odds and predictive parity at the same time if the prevalence of a condition differs by demographic group. This is why metric selection must be guided by the specific clinical context and ethical priorities of each use case.",
-  },
-  {
-    question: "Which fairness metrics are required by the EU AI Act?",
-    answer:
-      "The EU AI Act does not mandate specific fairness metrics. Instead, it requires that high-risk AI systems, including healthcare AI, undergo bias testing and that providers demonstrate that their systems do not produce discriminatory outcomes. The choice of metrics depends on the specific application, but organizations should evaluate multiple metrics across all relevant protected attributes and document their methodology and findings.",
-  },
-  {
-    question: "How does ParityScope handle fairness across intersectional groups?",
-    answer:
-      "ParityScope evaluates fairness not only across individual protected attributes but also across their intersections. This means we analyze model performance for subgroups defined by combinations of race, gender, age, and other attributes. Intersectional analysis is critical because disparities often compound at the intersection of multiple identities in ways that single-attribute analysis cannot detect.",
-  },
-];
+const letters = [...new Set(glossaryTerms.map((t) => t.letter))].sort();
 
 export default function GlossaryPage() {
   return (
@@ -128,61 +117,98 @@ export default function GlossaryPage() {
         <div className="mx-auto max-w-4xl">
           <SectionHeader
             label="Glossary"
-            title="AI Fairness & Healthcare Compliance Terminology"
-            description="A comprehensive reference for the key terms, metrics, and concepts in algorithmic fairness, bias auditing, and healthcare AI regulation."
+            title="AI Fairness and Healthcare Compliance Terminology"
+            description="A comprehensive reference of key terms in algorithmic fairness, bias auditing, healthcare regulation, and compliance. Designed for clinical informaticists, data scientists, compliance officers, and healthcare leaders."
             align="left"
           />
-        </div>
-      </section>
 
-      <section className="bg-off-white px-4 py-section sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <dl className="space-y-0 divide-y divide-light-gray rounded-xl border border-light-gray bg-white">
-            {glossaryTerms.map((item) => (
-              <div key={item.term} className="px-8 py-6">
-                <dt className="text-h4 font-semibold text-navy">{item.term}</dt>
-                <dd className="mt-2 text-medium-gray">{item.definition}</dd>
-              </div>
+          {/* Alphabet Navigation */}
+          <nav className="mt-10 flex flex-wrap gap-2" aria-label="Glossary navigation">
+            {letters.map((letter) => (
+              <a
+                key={letter}
+                href={`#letter-${letter}`}
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-light-gray text-sm font-semibold text-navy transition-colors hover:bg-teal hover:text-white"
+              >
+                {letter}
+              </a>
             ))}
-          </dl>
-        </div>
-      </section>
-
-      <section className="px-4 py-section sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <SectionHeader
-            label="FAQ"
-            title="Frequently Asked Questions"
-            description="Common questions about fairness metrics, regulatory requirements, and practical implementation."
-            align="left"
-          />
-          <div className="mt-12">
-            <Accordion items={faqItems} />
-          </div>
+          </nav>
         </div>
       </section>
 
       <section className="bg-off-white px-4 py-section sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl text-center">
+        <div className="mx-auto max-w-4xl">
+          {letters.map((letter) => {
+            const termsForLetter = glossaryTerms.filter(
+              (t) => t.letter === letter
+            );
+            return (
+              <div key={letter} id={`letter-${letter}`} className="mb-12 last:mb-0">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-navy">
+                  <span className="text-h4 font-bold text-white">{letter}</span>
+                </div>
+                <dl className="space-y-6">
+                  {termsForLetter.map((item) => (
+                    <div
+                      key={item.term}
+                      className="rounded-xl border border-light-gray bg-white p-6 shadow-card"
+                    >
+                      <dt className="text-h4 font-semibold text-navy">
+                        {item.term}
+                      </dt>
+                      <dd className="mt-3 text-medium-gray leading-relaxed">
+                        {item.definition}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Related Resources */}
+      <section className="px-4 py-section sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
           <SectionHeader
-            label="Related Resources"
-            title="Deepen Your Understanding"
+            label="Go Deeper"
+            title="Related Resources"
+            description="Explore our whitepapers, blog, and case studies for in-depth coverage of these topics in practice."
           />
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {[
-              { title: "Fairness Metrics Guide", href: "/resources/whitepapers", description: "In-depth guide covering 15+ metrics with clinical examples." },
-              { title: "Case Studies", href: "/resources/case-studies", description: "See fairness audits applied to real clinical AI models." },
-              { title: "Blog", href: "/resources/blog", description: "Latest insights on AI fairness and healthcare regulation." },
+              {
+                title: "Fairness Metrics Whitepaper",
+                href: "/resources/whitepapers",
+                description:
+                  "A 64-page guide covering every major fairness metric with mathematical definitions, clinical examples, and selection guidance.",
+              },
+              {
+                title: "Blog: Intersectional Fairness",
+                href: "/resources/blog",
+                description:
+                  "Why single-attribute analysis misses critical disparities and how intersectional evaluation works in practice.",
+              },
+              {
+                title: "Case Studies",
+                href: "/resources/case-studies",
+                description:
+                  "See how healthcare organizations apply these concepts to real clinical AI systems with measurable outcomes.",
+              },
             ].map((link) => (
               <Link
                 key={link.title}
                 href={link.href}
-                className="group rounded-xl border border-light-gray bg-white p-6 transition-shadow hover:shadow-card"
+                className="group rounded-xl border border-light-gray p-8 transition-shadow hover:shadow-card-hover"
               >
                 <h3 className="text-h4 font-semibold text-navy group-hover:text-teal">
                   {link.title}
                 </h3>
-                <p className="mt-2 text-body-sm text-medium-gray">{link.description}</p>
+                <p className="mt-2 text-body-sm text-medium-gray">
+                  {link.description}
+                </p>
               </Link>
             ))}
           </div>
@@ -190,10 +216,10 @@ export default function GlossaryPage() {
       </section>
 
       <CTASection
-        title="Put These Concepts Into Practice"
-        description="ParityScope evaluates your clinical AI across all of these fairness metrics automatically. See how it works."
+        title="Put These Concepts into Practice"
+        description="ParityScope makes it easy to apply fairness metrics, regulatory compliance checks, and continuous monitoring to your clinical AI systems. See the platform in action."
         primaryCTA={{ label: "Request a Demo", href: "/contact" }}
-        secondaryCTA={{ label: "View Product", href: "/product" }}
+        secondaryCTA={{ label: "Explore the Product", href: "/product" }}
       />
     </>
   );

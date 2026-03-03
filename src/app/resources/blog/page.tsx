@@ -150,6 +150,51 @@ export default function BlogPage() {
         </div>
       </section>
 
+      {/* More Resources */}
+      <section className="px-4 py-section sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl text-center">
+          <SectionHeader
+            label="More Resources"
+            title="Explore Our Resource Library"
+          />
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            {[
+              {
+                title: "Case Studies",
+                href: "/resources/case-studies",
+                description:
+                  "Real-world stories of healthcare organizations ensuring AI fairness with measurable outcomes.",
+              },
+              {
+                title: "Whitepapers",
+                href: "/resources/whitepapers",
+                description:
+                  "In-depth guides on compliance frameworks, fairness methodology, and monitoring programs.",
+              },
+              {
+                title: "Glossary",
+                href: "/resources/glossary",
+                description:
+                  "Comprehensive definitions of AI fairness, bias, and healthcare compliance terminology.",
+              },
+            ].map((link) => (
+              <Link
+                key={link.title}
+                href={link.href}
+                className="group rounded-xl border border-light-gray p-8 transition-shadow hover:shadow-card-hover"
+              >
+                <h3 className="text-h4 font-semibold text-navy group-hover:text-teal">
+                  {link.title}
+                </h3>
+                <p className="mt-2 text-body-sm text-medium-gray">
+                  {link.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <CTASection
         title="See ParityScope in Action"
         description="Ready to see how fairness auditing, continuous monitoring, and regulatory compliance work in practice? Request a demo tailored to your clinical AI portfolio."
