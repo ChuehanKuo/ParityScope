@@ -30,12 +30,32 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+api = [
+    "fastapi>=0.109",
+    "uvicorn[standard]>=0.27",
+    "pydantic>=2.5",
+    "sqlalchemy>=2.0",
+]
+cli = [
+    "click>=8.1",
+    "rich>=13.0",
+]
+connectors = [
+    "torch>=2.0",
+]
+all = [
+    "parityscope[api,cli,connectors]",
+]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "ruff>=0.4",
     "mypy>=1.8",
+    "httpx>=0.26",
 ]
+
+[project.scripts]
+parityscope = "parityscope.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
