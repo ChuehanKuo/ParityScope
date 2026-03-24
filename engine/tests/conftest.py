@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from parityscope.audit.engine import FairnessAudit
+
 
 @pytest.fixture
 def binary_dataset():
@@ -86,3 +88,34 @@ def fair_dataset():
         "groups": groups,
         "demographics": demographics,
     }
+
+
+@pytest.fixture
+def sample_data():
+    """Generate sample audit data for testing."""
+    rng = np.random.default_rng(42)
+    n = 200
+    y_true = rng.integers(0, 2, n)
+    y_pred = y_true.copy()
+    # Inject some errors
+    flip = rng.random(n) < 0.2
+    y_pred[flip] = 1 - y_pred[flip]
+    y_score = np.clip(y_pred + rng.normal(0, 0.2, n), 0, 1)
+    demographics = pd.DataFrame({
+        'race': rng.choice(['White', 'Black', 'Hispanic'], n, p=[0.5, 0.3, 0.2]),
+        'sex': rng.choice(['Male', 'Female'], n),
+    })
+    return y_true, y_pred, y_score, demographics
+
+
+@pytest.fixture
+def sample_audit_result(sample_data):
+    """Run an audit and return the result."""
+    y_true, y_pred, y_score, demographics = sample_data
+    audit = FairnessAudit(
+        model_name="test_model",
+        protected_attributes=["race", "sex"],
+        jurisdiction="eu-ai-act",
+        clinical_domain="diagnosis",
+    )
+    return audit.run(y_true, y_pred, demographics, y_score)

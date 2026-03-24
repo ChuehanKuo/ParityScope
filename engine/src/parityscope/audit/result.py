@@ -65,6 +65,12 @@ class AuditResult:
     total_samples: int
     group_counts: dict[str, int]
 
+    # Extended results (v0.2.0)
+    intersectional_results: tuple[MetricResult, ...] | None = None
+    worst_subgroups: tuple[dict, ...] | None = None
+    sample_adequacy: dict | None = None
+    confidence_intervals: dict | None = None
+
     @property
     def unfair_metrics(self) -> list[MetricResult]:
         """Return metrics flagged as unfair."""
@@ -82,7 +88,7 @@ class AuditResult:
 
     def to_dict(self) -> dict:
         """Serialize to a plain dictionary for JSON export."""
-        return {
+        result = {
             "audit_id": self.audit_id,
             "model_name": self.model_name,
             "timestamp": self.timestamp,
@@ -115,10 +121,38 @@ class AuditResult:
                         }
                         for g in m.group_results
                     ],
+                    **({"ci_lower": m.details["ci_lower"],
+                        "ci_upper": m.details["ci_upper"]}
+                       if "ci_lower" in m.details else {}),
+                    **({"effect_sizes": m.details["effect_sizes"]}
+                       if "effect_sizes" in m.details else {}),
                 }
                 for m in self.metric_results
             ],
         }
+        # Add extended results if present
+        if self.intersectional_results is not None:
+            result["intersectional_results"] = [
+                {
+                    "metric_name": m.metric_name,
+                    "display_name": m.display_name,
+                    "disparity": m.disparity,
+                    "fairness_level": m.fairness_level.value,
+                    "threshold": m.threshold,
+                    "group_results": [
+                        {"group": g.group_label, "rate": g.rate, "sample_size": g.sample_size}
+                        for g in m.group_results
+                    ],
+                }
+                for m in self.intersectional_results
+            ]
+        if self.worst_subgroups is not None:
+            result["worst_subgroups"] = list(self.worst_subgroups)
+        if self.sample_adequacy is not None:
+            result["sample_adequacy"] = self.sample_adequacy
+        if self.confidence_intervals is not None:
+            result["confidence_intervals"] = self.confidence_intervals
+        return result
 
     @staticmethod
     def _now_iso() -> str:

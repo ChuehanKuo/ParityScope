@@ -1,0 +1,26 @@
+# ParityScope audit config — sepsis risk model demo
+model_name: "sepsis_risk_v2.1"
+data_path: "./examples/sample_patient_data.csv"
+
+column_map:
+  predictions: "model_prediction"
+  labels: "sepsis_confirmed"
+  scores: "risk_score"
+
+protected_attributes:
+  - race
+  - sex
+
+jurisdiction: "eu-ai-act"
+clinical_domain: "diagnosis"
+
+intersectional: true
+bootstrap: false
+
+output_dir: "./examples/output"
+output_formats:
+  - pdf
+  - json
+
+include_root_cause: true
+include_recommendations: true

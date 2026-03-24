@@ -40,3 +40,19 @@ next-env.d.ts
 
 # Vercel
 .vercel
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+engine/dist/
+engine/build/
+engine/*.egg-info
+*.db
+
+# ParityScope generated output
+assessment_output/
+examples/output/
+examples/real_world_results/
+examples/monitoring_demo.db

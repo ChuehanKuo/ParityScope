@@ -7,8 +7,14 @@ Patient data never leaves your infrastructure.
 """
 
 from parityscope.audit.engine import FairnessAudit
-from parityscope.audit.result import AuditResult
+from parityscope.audit.result import AuditResult, FairnessLevel
 from parityscope.reports.pdf_report import generate_pdf_report
 
-__version__ = "0.1.0"
-__all__ = ["FairnessAudit", "AuditResult", "generate_pdf_report", "__version__"]
+__version__ = "0.2.0"
+__all__ = [
+    "FairnessAudit",
+    "AuditResult",
+    "FairnessLevel",
+    "generate_pdf_report",
+    "__version__",
+]

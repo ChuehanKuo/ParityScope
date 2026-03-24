@@ -57,6 +57,11 @@ class FairnessAudit:
         metrics: Explicit list of metric names to compute. If None, uses
             regulation-aware defaults.
         thresholds: Custom thresholds for fairness levels. Keys: "fair", "marginal".
+        intersectional: If True, also run metrics on intersectional groups.
+        max_intersection_depth: Max attributes to combine for intersections (default 2).
+        bootstrap: If True, compute bootstrap confidence intervals for all metrics.
+        n_bootstrap: Number of bootstrap iterations.
+        bootstrap_ci: Confidence interval level (default 0.95).
     """
 
     def __init__(
@@ -67,12 +72,22 @@ class FairnessAudit:
         clinical_domain: str | None = None,
         metrics: list[str] | None = None,
         thresholds: dict[str, float] | None = None,
+        intersectional: bool = False,
+        max_intersection_depth: int = 2,
+        bootstrap: bool = False,
+        n_bootstrap: int = 1000,
+        bootstrap_ci: float = 0.95,
     ):
         self.model_name = model_name
         self.protected_attributes = protected_attributes
         self.jurisdiction = jurisdiction
         self.clinical_domain = clinical_domain
         self.thresholds = {**DEFAULT_THRESHOLDS, **(thresholds or {})}
+        self.intersectional = intersectional
+        self.max_intersection_depth = max_intersection_depth
+        self.bootstrap = bootstrap
+        self.n_bootstrap = n_bootstrap
+        self.bootstrap_ci = bootstrap_ci
 
         if metrics is not None:
             self._metric_names = metrics
@@ -120,6 +135,7 @@ class FairnessAudit:
         )
 
         all_metric_results: list[MetricResult] = []
+        ci_data: dict[str, dict] = {}
 
         for attr in self.protected_attributes:
             groups = np.asarray(demographics[attr])
@@ -150,6 +166,50 @@ class FairnessAudit:
                 # Build group results
                 group_results = self._extract_group_results(raw_result, groups)
 
+                # Build details dict
+                details = {k: v for k, v in raw_result.items() if k != "disparity"}
+
+                # Bootstrap confidence intervals
+                if self.bootstrap:
+                    try:
+                        from parityscope.metrics.bootstrap import bootstrap_metric
+                        input_arr = (
+                            y_score_arr if metric_info.input_type == InputType.SCORE
+                            else y_pred_arr
+                        )
+                        boot_result = bootstrap_metric(
+                            metric_info.compute_fn, y_true_arr, input_arr, groups,
+                            n_bootstrap=self.n_bootstrap, ci_level=self.bootstrap_ci,
+                        )
+                        details["ci_lower"] = boot_result.ci_lower
+                        details["ci_upper"] = boot_result.ci_upper
+                        details["standard_error"] = boot_result.standard_error
+                        ci_key = f"{attr}:{metric_name}"
+                        ci_data[ci_key] = {
+                            "ci_lower": boot_result.ci_lower,
+                            "ci_upper": boot_result.ci_upper,
+                            "se": boot_result.standard_error,
+                        }
+                    except ImportError:
+                        pass
+
+                # Effect sizes
+                if group_results:
+                    try:
+                        from parityscope.metrics.effect_size import compute_effect_sizes
+                        rates = {g.group_label: g.rate for g in group_results}
+                        sizes = {g.group_label: g.sample_size for g in group_results}
+                        effect = compute_effect_sizes(rates, sizes)
+                        details["effect_sizes"] = {
+                            "cohens_d": effect.cohens_d,
+                            "odds_ratio": effect.odds_ratio,
+                            "risk_ratio": effect.risk_ratio,
+                            "risk_difference": effect.risk_difference,
+                            "interpretation": effect.interpretation,
+                        }
+                    except ImportError:
+                        pass
+
                 result = MetricResult(
                     metric_name=f"{attr}:{metric_name}",
                     display_name=f"{metric_info.display_name} ({attr})",
@@ -157,9 +217,79 @@ class FairnessAudit:
                     fairness_level=level,
                     group_results=tuple(group_results),
                     threshold=self.thresholds["marginal"],
-                    details={k: v for k, v in raw_result.items() if k != "disparity"},
+                    details=details,
                 )
                 all_metric_results.append(result)
+
+        # Intersectional analysis
+        intersectional_results = None
+        if self.intersectional and len(self.protected_attributes) >= 2:
+            try:
+                from parityscope.audit.intersectional import run_intersectional_metrics
+                metric_fns = []
+                for mn in self._metric_names:
+                    mi = get_metric(mn)
+                    metric_fns.append((mn, mi.display_name, mi.compute_fn))
+
+                inter_results = run_intersectional_metrics(
+                    y_true=y_true_arr,
+                    y_pred=y_pred_arr,
+                    demographics=demographics,
+                    attributes=self.protected_attributes,
+                    metric_fns=metric_fns,
+                    thresholds=self.thresholds,
+                    y_score=y_score_arr,
+                    max_depth=self.max_intersection_depth,
+                )
+                if inter_results:
+                    intersectional_results = tuple(inter_results)
+            except ImportError:
+                pass
+
+        # Subgroup discovery
+        worst_subgroups = None
+        try:
+            from parityscope.audit.subgroup_discovery import (
+                discover_worst_subgroups,
+                subgroup_findings_to_dicts,
+            )
+            findings = discover_worst_subgroups(
+                y_true=y_true_arr,
+                y_pred=y_pred_arr,
+                demographics=demographics,
+                protected_attributes=self.protected_attributes,
+            )
+            if findings:
+                worst_subgroups = tuple(subgroup_findings_to_dicts(findings))
+        except ImportError:
+            pass
+
+        # Sample adequacy
+        sample_adequacy_data = None
+        try:
+            from parityscope.metrics.power import analyze_sample_adequacy
+            power_results = analyze_sample_adequacy(
+                demographics=demographics,
+                protected_attributes=self.protected_attributes,
+            )
+            sample_adequacy_data = {
+                pr.attribute: {
+                    "overall_adequate": pr.overall_adequate,
+                    "summary": pr.summary,
+                    "groups": [
+                        {
+                            "group": sa.group_label,
+                            "n": sa.sample_size,
+                            "adequate": sa.is_adequate,
+                            "min_detectable_effect": round(sa.minimum_detectable_effect, 4),
+                        }
+                        for sa in pr.group_results
+                    ],
+                }
+                for pr in power_results
+            }
+        except ImportError:
+            pass
 
         # Overall fairness: worst across all metrics
         if any(m.fairness_level == FairnessLevel.UNFAIR for m in all_metric_results):
@@ -189,6 +319,10 @@ class FairnessAudit:
             overall_fairness=overall,
             total_samples=len(y_true_arr),
             group_counts=group_counts,
+            intersectional_results=intersectional_results,
+            worst_subgroups=worst_subgroups,
+            sample_adequacy=sample_adequacy_data,
+            confidence_intervals=ci_data if ci_data else None,
         )
 
     @staticmethod
