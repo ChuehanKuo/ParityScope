@@ -8,7 +8,8 @@ node_modules/
 .next/
 out/
 build/
-dist/
+# dist/ at root level only — public/sdk/dist/ is tracked
+/dist/
 
 # Environment
 .env
