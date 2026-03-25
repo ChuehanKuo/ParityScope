@@ -40,7 +40,7 @@ const tiers = [
       "PDF & JSON reports",
       "Email support",
     ],
-    cta: "Book a Demo",
+    cta: "Book an Assessment",
     highlighted: true,
     note: null,
   },

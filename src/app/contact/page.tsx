@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/forms/contact-form";
 
 export const metadata: Metadata = {
-  title: "Contact — Book a Demo",
+  title: "Contact — Book an Assessment",
   description:
     "Get in touch with ParityScope. Book a personalized demo of our AI fairness platform for healthcare.",
 };

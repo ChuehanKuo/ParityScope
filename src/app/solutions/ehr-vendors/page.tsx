@@ -232,7 +232,7 @@ export default function EhrVendorsPage() {
               href="/contact"
               className="rounded-full bg-coral px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-coral/90"
             >
-              Explore Partnership
+              Book an Assessment
             </Link>
             <Link
               href="/pricing"

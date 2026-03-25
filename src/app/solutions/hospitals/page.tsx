@@ -222,7 +222,7 @@ export default function HospitalsPage() {
               href="/contact"
               className="rounded-full bg-coral px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-coral/90"
             >
-              Schedule a Consultation
+              Book an Assessment
             </Link>
             <Link
               href="/pricing"

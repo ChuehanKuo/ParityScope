@@ -239,7 +239,7 @@ export default function MissionPage() {
               href="/contact"
               className="rounded-full bg-teal px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-teal-dark"
             >
-              Get in Touch
+              Book an Assessment
             </Link>
             <Link
               href="/about/team"

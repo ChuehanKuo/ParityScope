@@ -448,7 +448,7 @@ for m in result.unfair_metrics:
               href="/contact"
               className="rounded-full bg-teal px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-teal-dark"
             >
-              Get Your Trial Key
+              Book an Assessment
             </Link>
             <Link
               href="/pricing"

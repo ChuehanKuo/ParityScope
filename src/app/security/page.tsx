@@ -329,7 +329,7 @@ export default function SecurityPage() {
               href="/contact"
               className="rounded-full bg-teal px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-teal-dark"
             >
-              Contact Our Security Team
+              Book an Assessment
             </Link>
           </div>
         </div>

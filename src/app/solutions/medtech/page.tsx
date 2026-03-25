@@ -231,7 +231,7 @@ export default function MedtechPage() {
               href="/contact"
               className="rounded-full bg-coral px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-coral/90"
             >
-              Book a Demo
+              Book an Assessment
             </Link>
             <Link
               href="/pricing"

@@ -259,7 +259,7 @@ export default function MitigationPage() {
               href="/contact"
               className="rounded-lg bg-teal px-8 py-3 font-semibold text-white transition-colors hover:bg-teal-dark"
             >
-              Request a Demo
+              Book an Assessment
             </Link>
             <Link
               href="/product"

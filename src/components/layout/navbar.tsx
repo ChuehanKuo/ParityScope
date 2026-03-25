@@ -89,7 +89,7 @@ export function Navbar() {
             href="/contact"
             className="hidden rounded-full bg-teal px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-dark sm:inline-flex"
           >
-            Book a Demo
+            Book an Assessment
           </Link>
 
           {/* Mobile menu button */}
@@ -148,7 +148,7 @@ export function Navbar() {
                 className="block w-full rounded-full bg-teal px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-teal-dark"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Book a Demo
+                Book an Assessment
               </Link>
             </div>
           </div>

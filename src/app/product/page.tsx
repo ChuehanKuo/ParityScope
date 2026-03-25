@@ -127,7 +127,7 @@ export default function ProductPage() {
               href="/contact"
               className="rounded-lg bg-teal px-8 py-3 font-semibold text-white transition-colors hover:bg-teal-dark"
             >
-              Request a Demo
+              Book an Assessment
             </Link>
             <Link
               href="/docs"
@@ -289,7 +289,7 @@ export default function ProductPage() {
               href="/contact"
               className="rounded-lg bg-teal px-8 py-3 font-semibold text-white transition-colors hover:bg-teal-dark"
             >
-              Schedule a Demo
+              Book an Assessment
             </Link>
             <Link
               href="/product/fairness-audit"
