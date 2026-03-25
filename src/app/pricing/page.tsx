@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export const metadata: Metadata = {
   title: "Pricing — Transparent Pricing for Every Stage",
@@ -118,6 +119,18 @@ const faqs = [
 export default function PricingPage() {
   return (
     <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      }} />
       {/* Hero */}
       <section className="bg-navy px-4 py-24 text-white sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl text-center">

@@ -1,0 +1,120 @@
+---
+title: "The 84-16 Problem: Why AI Governance Committees Aren't Enough"
+description: "84% of healthcare organizations have AI governance committees, but only 16% have governance frameworks. Here's why the gap exists and what to do about it."
+date: "2026-03-01"
+author: "ParityScope Team"
+authorRole: "Clinical AI Governance"
+tags: ["AI Governance", "Healthcare", "Compliance", "Best Practices"]
+published: true
+---
+
+There is a statistic that should trouble every healthcare executive responsible for AI strategy: **84% of healthcare organizations report having an AI governance committee, but only 16% have implemented a governance framework with defined processes, metrics, and accountability structures.**
+
+That 68-percentage-point gap represents one of the most significant unmanaged risks in modern healthcare. It is the distance between having good intentions and having actual governance. And as regulatory pressure intensifies and clinical AI deployments multiply, that gap is becoming untenable.
+
+## The Illusion of Governance
+
+Forming an AI governance committee is a natural first step. It signals organizational seriousness, creates a forum for discussion, and assigns nominal responsibility. Most major health systems established these committees between 2021 and 2024, typically comprising a mix of clinical leadership, IT executives, legal counsel, compliance officers, and occasionally ethicists or patient advocates.
+
+The problem is that many of these committees function as **discussion groups rather than governance bodies**. They meet quarterly, review AI proposals at a high level, and provide general guidance. But they lack the infrastructure to actually govern.
+
+Consider what governance committees typically lack:
+
+- **Standardized evaluation criteria.** Without defined metrics for assessing AI systems -- including fairness, accuracy, clinical validity, and safety -- each review is ad hoc. Different committee members apply different standards, and decisions are inconsistent.
+- **Monitoring capabilities.** Approving an AI system for deployment is only the beginning. Without continuous performance monitoring, committees have no visibility into how systems behave in production, whether performance degrades over time, or whether disparities emerge as patient populations shift.
+- **Accountability structures.** When no individual or team is specifically accountable for the ongoing performance and fairness of a deployed AI system, accountability diffuses. The committee approved it, IT deployed it, a vendor built it -- but nobody owns it.
+- **Documentation practices.** Regulatory compliance increasingly requires detailed documentation of AI system design, training data, validation results, known limitations, and monitoring outcomes. Committees rarely produce this documentation.
+- **Remediation processes.** When a problem is identified -- a bias detected, a performance gap discovered -- committees often lack the authority or the operational process to mandate changes, pause deployments, or require vendor action.
+
+The result is an organizational structure that looks like governance from the outside but fails to deliver governance outcomes.
+
+## Why the Gap Exists
+
+The 84-16 gap is not primarily a failure of will. Most healthcare leaders genuinely want to govern AI responsibly. The gap persists because of structural challenges.
+
+### The tooling problem
+
+Governance without tools is like auditing without accounting software. Healthcare organizations are asked to evaluate AI systems for fairness and bias, but most lack any automated means of doing so. Manual audits are expensive, slow, and difficult to repeat. Without tooling, even well-intentioned committees cannot conduct the ongoing monitoring that real governance requires.
+
+### The expertise problem
+
+Effective AI governance requires a rare combination of clinical knowledge, statistical expertise, regulatory awareness, and technical understanding. Few individuals possess all of these competencies, and few organizations have successfully assembled multidisciplinary teams that do. Committee members often lack the technical depth to evaluate fairness metrics, or the clinical context to interpret what statistical disparities mean for patient care.
+
+### The velocity problem
+
+Health systems are adopting AI at an accelerating pace. A 2024 survey by the American Hospital Association found that over 60% of hospitals were using or piloting AI-driven clinical tools. Governance committees that meet quarterly cannot keep pace with monthly or weekly deployment decisions. The backlog grows, and pragmatism wins -- systems get deployed without thorough review because the committee cannot process requests fast enough.
+
+### The vendor opacity problem
+
+Many clinical AI systems are provided by EHR vendors or third-party companies that treat their algorithms as proprietary. Governance committees often cannot access training data details, model architectures, or granular performance metrics. They are asked to govern systems they cannot fully inspect.
+
+### The measurement problem
+
+You cannot govern what you cannot measure. Without defined key performance indicators for AI governance -- such as the percentage of deployed systems that have undergone fairness auditing, or the mean time to detect and remediate a performance disparity -- committees cannot assess whether governance is actually working.
+
+## What a Real Governance Framework Looks Like
+
+Moving from a committee to a framework requires building three interconnected pillars: **people, process, and tools**.
+
+### People: Defined Roles and Accountability
+
+A governance framework assigns clear ownership. Every deployed AI system should have:
+
+- A **clinical owner** responsible for ensuring the system's outputs are clinically appropriate and that clinicians understand its limitations
+- A **technical owner** responsible for monitoring performance, managing updates, and conducting fairness audits
+- A **governance lead** responsible for ensuring documentation is maintained, regulatory requirements are met, and issues are escalated appropriately
+
+The committee still has a role, but it shifts from being the sole governance mechanism to being an oversight and escalation body that reviews the work of these assigned owners.
+
+### Process: Repeatable and Documented
+
+Governance processes should cover the full AI lifecycle:
+
+- **Pre-deployment review**: standardized evaluation criteria including fairness metrics, clinical validation requirements, data representativeness assessments, and human oversight design
+- **Deployment approval**: formal sign-off with documented risk assessment and monitoring plan
+- **Post-deployment monitoring**: continuous or periodic performance evaluation against defined benchmarks, including subgroup analysis across demographic categories
+- **Issue management**: defined escalation paths, remediation timelines, and authority to pause or withdraw systems that fail to meet standards
+- **Periodic re-evaluation**: scheduled comprehensive reviews to account for data drift, population changes, and evolving regulatory requirements
+
+These processes should be documented, repeatable, and auditable. If your governance process lives in the minds of committee members rather than in written procedures, it is not a framework.
+
+### Tools: Automation and Measurement
+
+Manual governance does not scale. A mature governance framework leverages tooling to:
+
+- Automate fairness auditing across demographic subgroups and multiple statistical measures
+- Generate compliance documentation that meets regulatory requirements
+- Monitor model performance in production and alert stakeholders to degradation or emerging disparities
+- Maintain an inventory of all deployed AI systems with their current compliance status
+- Track governance metrics over time to demonstrate continuous improvement
+
+## The Regulatory Push
+
+The urgency of closing the governance gap is no longer theoretical. Multiple regulatory developments are converging:
+
+- The **EU AI Act** requires comprehensive governance for high-risk AI systems, with full compliance for healthcare AI due by August 2027. Organizations without governance frameworks will not be able to demonstrate compliance.
+- The **FDA** has been incrementally increasing scrutiny of AI-enabled medical devices, with a growing emphasis on post-market performance monitoring and algorithmic bias.
+- **CMS** has signaled interest in health equity requirements for AI systems used in Medicare and Medicaid programs, and the 2024 final rule on health equity already touches on algorithmic decision-making.
+- **State legislatures** in Colorado, Illinois, California, and others have passed or proposed legislation governing AI in healthcare and insurance contexts.
+
+Organizations that wait for regulatory deadlines to build governance infrastructure will find themselves scrambling. The time to build is before the requirement becomes enforceable.
+
+## Five Steps to Move from Committee to Framework
+
+If your organization has a governance committee but not a governance framework, here is a practical path forward.
+
+**Step 1: Conduct a comprehensive AI inventory.** You cannot govern what you do not know exists. Catalog every AI system in use, including those embedded in vendor products. For each system, document its purpose, the decisions it influences, the patient populations it affects, and its current oversight status.
+
+**Step 2: Define governance metrics and standards.** Establish the specific criteria against which AI systems will be evaluated. This should include fairness metrics (such as equalized odds, demographic parity, and predictive parity across race, sex, and age), minimum performance thresholds, data representativeness requirements, and documentation standards.
+
+**Step 3: Assign system-level ownership.** For each deployed AI system, designate a clinical owner and a technical owner. Document their responsibilities and establish reporting relationships to the governance committee.
+
+**Step 4: Implement monitoring tooling.** Invest in or build the infrastructure needed to continuously evaluate AI system performance. This includes demographic fairness auditing tools, performance dashboards, and alert mechanisms. Platforms like ParityScope are designed specifically to fill this gap, providing automated fairness auditing and compliance documentation for healthcare AI systems.
+
+**Step 5: Establish a governance calendar.** Define the cadence for pre-deployment reviews, post-deployment monitoring reports, comprehensive re-evaluations, and committee oversight meetings. Build in flexibility for ad hoc reviews when issues are identified, but ensure that routine governance happens on a predictable schedule.
+
+## Closing the Gap
+
+The 84-16 problem is not inevitable. It reflects a specific and solvable set of challenges: missing tools, undefined processes, and diffused accountability. Healthcare organizations that systematically address these challenges will be better positioned for regulatory compliance, better protected against the reputational and clinical risks of biased AI, and better able to realize the genuine benefits that well-governed AI can deliver.
+
+The committee was a good start. Now it is time to build the framework.

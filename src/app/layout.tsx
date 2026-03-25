@@ -1,8 +1,22 @@
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { JsonLd } from "@/components/shared/json-ld";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -60,8 +74,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="font-sans antialiased">
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "ParityScope",
+          url: "https://parityscope.com",
+          logo: "https://parityscope.com/logo.svg",
+          description: "Healthcare AI fairness compliance toolkit for bias auditing, monitoring, and mitigation.",
+          sameAs: [
+            "https://twitter.com/parityscope",
+            "https://linkedin.com/company/parityscope",
+            "https://github.com/parityscope",
+          ],
+          contactPoint: {
+            "@type": "ContactPoint",
+            email: "hello@parityscope.com",
+            contactType: "sales",
+          },
+        }} />
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />

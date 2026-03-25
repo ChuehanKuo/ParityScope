@@ -36,8 +36,8 @@
   --color-border: #E2E8F0;
 
   /* Typography Scale */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   --text-display: 4.5rem;
   --text-h1: 3.5rem;

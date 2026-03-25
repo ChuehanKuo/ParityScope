@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export const metadata: Metadata = {
   title: "Product — AI Fairness Platform for Healthcare",
@@ -111,6 +112,20 @@ const deploymentOptions = [
 export default function ProductPage() {
   return (
     <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "ParityScope",
+        applicationCategory: "HealthcareApplication",
+        operatingSystem: "Cross-platform",
+        description: "AI fairness auditing, continuous monitoring, and bias mitigation toolkit for healthcare organizations.",
+        offers: {
+          "@type": "AggregateOffer",
+          priceCurrency: "EUR",
+          lowPrice: "25000",
+          offerCount: "3",
+        },
+      }} />
       {/* Hero */}
       <section className="bg-navy px-4 py-section sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl text-center">
