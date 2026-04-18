@@ -82,6 +82,19 @@ class TrendAnalyzer:
             recent_values=tuple(round(v, 6) for v in y[-5:]),
         )
 
+    def analyze_with_changepoints(
+        self, snapshots: list[MetricSnapshot]
+    ) -> tuple[TrendResult, list]:
+        """Analyze trend and detect changepoints in the same call."""
+        trend = self.analyze(snapshots)
+        changepoints: list = []
+        try:
+            from parityscope.ai.monitoring import detect_changepoints
+            changepoints = detect_changepoints(snapshots)
+        except ImportError:
+            pass
+        return trend, changepoints
+
     def analyze_all(
         self, store: MonitoringStore, model_name: str, limit: int = 50
     ) -> list[TrendResult]:

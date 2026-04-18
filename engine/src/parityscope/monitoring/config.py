@@ -18,6 +18,7 @@ class MonitoringConfig:
     schedule: str = "weekly"  # daily | weekly | monthly
     drift_method: str = "absolute"  # absolute | relative | statistical
     drift_threshold: float = 0.03
+    use_ai: bool = False
     alert_rules: list[dict] = field(default_factory=lambda: [
         {"name": "fairness_degradation", "metric_pattern": "*", "condition": "degraded_level", "severity": "warning"},
         {"name": "severe_drift", "metric_pattern": "*", "condition": "drift", "severity": "critical", "params": {"drift_threshold": 0.05}},
@@ -54,6 +55,7 @@ def load_monitoring_config(path: str | Path) -> MonitoringConfig:
         schedule=normalized.get("schedule", "weekly"),
         drift_method=normalized.get("drift_method", "absolute"),
         drift_threshold=float(normalized.get("drift_threshold", 0.03)),
+        use_ai=bool(normalized.get("use_ai", False)),
         alert_rules=normalized.get("alert_rules", MonitoringConfig.alert_rules),
         trend_window=int(normalized.get("trend_window", 10)),
         protected_attributes=normalized.get("protected_attributes", []),

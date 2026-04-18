@@ -13,7 +13,7 @@ import pandas as pd
 
 from parityscope.audit.engine import FairnessAudit
 from parityscope.audit.result import AuditResult
-from parityscope.monitoring.alerts import Alert, AlertEngine, AlertRule
+from parityscope.monitoring.alerts import Alert, AlertEngine, AlertRule, AlertSeverity
 from parityscope.monitoring.config import MonitoringConfig
 from parityscope.monitoring.drift import DriftDetector, DriftResult
 from parityscope.monitoring.store import AuditSummary, MonitoringStore
@@ -58,6 +58,12 @@ class MonitoringSession:
             method=config.drift_method,
             threshold=config.drift_threshold,
         )
+        if config.use_ai:
+            try:
+                from parityscope.ai.monitoring import StatisticalDriftDetector
+                self._drift = StatisticalDriftDetector()
+            except ImportError:
+                pass
 
         # Alert engine
         rules = [AlertRule.from_dict(r) for r in config.alert_rules]
@@ -115,6 +121,33 @@ class MonitoringSession:
             baseline=baseline_result,
             drift_results=list(drift_results) if drift_results else None,
         )
+
+        # AI-powered anomaly detection (optional)
+        if self.config.use_ai:
+            try:
+                import uuid as _uuid
+                from datetime import datetime as _dt
+                from datetime import timezone as _tz
+
+                from parityscope.ai.monitoring import detect_anomalies
+                anomaly = detect_anomalies(
+                    self.store, self.config.model_name, result
+                )
+                if anomaly.is_anomaly:
+                    alerts = list(alerts)
+                    alerts.append(Alert(
+                        alert_id=str(_uuid.uuid4())[:8],
+                        model_name=self.config.model_name,
+                        audit_id=result.audit_id,
+                        severity=AlertSeverity.WARNING,
+                        rule_name="ai_anomaly_detection",
+                        metric_name=",".join(anomaly.anomalous_metrics)
+                            if anomaly.anomalous_metrics else "*",
+                        message=anomaly.description,
+                        created_at=_dt.now(_tz.utc).isoformat(),
+                    ))
+            except ImportError:
+                pass
 
         # Store alerts
         for alert in alerts:

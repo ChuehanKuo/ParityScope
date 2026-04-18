@@ -79,8 +79,9 @@ class RootCauseReport:
 class RootCauseAnalysis:
     """Orchestrates root cause analysis for fairness disparities."""
 
-    def __init__(self, protected_attributes: list[str]):
+    def __init__(self, protected_attributes: list[str], use_ai: bool = False):
         self.protected_attributes = protected_attributes
+        self.use_ai = use_ai
 
     def run(
         self,
@@ -104,6 +105,28 @@ class RootCauseAnalysis:
         """
         # Proxy detection
         proxies = detect_proxies(X, demographics, self.protected_attributes)
+
+        # AI-powered proxy detection (optional)
+        if self.use_ai:
+            try:
+                from parityscope.ai.detection import detect_proxies_ml
+                ai_proxies = detect_proxies_ml(
+                    X, demographics, self.protected_attributes
+                )
+                if ai_proxies:
+                    seen = {
+                        (p.feature, p.protected_attribute) for p in proxies
+                    }
+                    merged = list(proxies)
+                    for p in ai_proxies:
+                        key = (p.feature, p.protected_attribute)
+                        if key not in seen:
+                            merged.append(p)
+                            seen.add(key)
+                    merged.sort(key=lambda p: abs(p.correlation), reverse=True)
+                    proxies = merged
+            except ImportError:
+                pass
 
         # Label bias
         label_findings = detect_label_bias(

@@ -103,6 +103,22 @@ class MonitoringStore:
                     key TEXT NOT NULL,
                     value TEXT NOT NULL
                 );
+
+                CREATE TABLE IF NOT EXISTS mitigation_effectiveness (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    model_name TEXT NOT NULL,
+                    strategy_id TEXT NOT NULL,
+                    strategy_name TEXT,
+                    metric_name TEXT NOT NULL,
+                    disparity_before REAL,
+                    disparity_after REAL,
+                    improvement REAL,
+                    audit_id_before TEXT,
+                    audit_id_after TEXT,
+                    timestamp TEXT NOT NULL
+                );
+                CREATE INDEX IF NOT EXISTS idx_effectiveness_model
+                    ON mitigation_effectiveness(model_name, strategy_id);
             """)
 
     def store_audit(self, result: AuditResult, tags: dict | None = None) -> str:
@@ -263,6 +279,49 @@ class MonitoringStore:
         """Get the most recent audit summary."""
         audits = self.list_audits(model_name, limit=1)
         return audits[0] if audits else None
+
+    def store_effectiveness(self, record: dict) -> None:
+        """Persist a mitigation effectiveness record."""
+        with self._conn:
+            self._conn.execute(
+                "INSERT INTO mitigation_effectiveness "
+                "(model_name, strategy_id, strategy_name, metric_name, "
+                "disparity_before, disparity_after, improvement, "
+                "audit_id_before, audit_id_after, timestamp) "
+                "VALUES (?,?,?,?,?,?,?,?,?,?)",
+                (
+                    record.get("model_name"),
+                    record.get("strategy_id"),
+                    record.get("strategy_name"),
+                    record.get("metric_name"),
+                    record.get("disparity_before"),
+                    record.get("disparity_after"),
+                    record.get("improvement"),
+                    record.get("audit_id_before"),
+                    record.get("audit_id_after"),
+                    record.get("timestamp")
+                        or datetime.now(timezone.utc).isoformat(),
+                ),
+            )
+
+    def get_effectiveness_history(
+        self, model_name: str, strategy_id: str | None = None
+    ) -> list[dict]:
+        """Retrieve effectiveness records, optionally filtered by strategy_id."""
+        if strategy_id is None:
+            rows = self._conn.execute(
+                "SELECT * FROM mitigation_effectiveness "
+                "WHERE model_name = ? ORDER BY timestamp DESC",
+                (model_name,),
+            ).fetchall()
+        else:
+            rows = self._conn.execute(
+                "SELECT * FROM mitigation_effectiveness "
+                "WHERE model_name = ? AND strategy_id = ? "
+                "ORDER BY timestamp DESC",
+                (model_name, strategy_id),
+            ).fetchall()
+        return [dict(r) for r in rows]
 
     def close(self) -> None:
         """Close the database connection."""

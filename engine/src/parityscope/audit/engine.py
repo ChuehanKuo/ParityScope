@@ -77,6 +77,7 @@ class FairnessAudit:
         bootstrap: bool = False,
         n_bootstrap: int = 1000,
         bootstrap_ci: float = 0.95,
+        use_ai: bool = False,
     ):
         self.model_name = model_name
         self.protected_attributes = protected_attributes
@@ -88,6 +89,7 @@ class FairnessAudit:
         self.bootstrap = bootstrap
         self.n_bootstrap = n_bootstrap
         self.bootstrap_ci = bootstrap_ci
+        self.use_ai = use_ai
 
         if metrics is not None:
             self._metric_names = metrics
@@ -263,6 +265,38 @@ class FairnessAudit:
                 worst_subgroups = tuple(subgroup_findings_to_dicts(findings))
         except ImportError:
             pass
+
+        # AI-powered subgroup discovery (optional)
+        if self.use_ai:
+            try:
+                from parityscope.ai.detection import discover_subgroups_ml
+                from parityscope.audit.subgroup_discovery import (
+                    subgroup_findings_to_dicts,
+                )
+                ai_findings = discover_subgroups_ml(
+                    y_true_arr,
+                    y_pred_arr,
+                    demographics,
+                    self.protected_attributes,
+                )
+                if ai_findings:
+                    ai_dicts = subgroup_findings_to_dicts(ai_findings)
+                    existing = list(worst_subgroups) if worst_subgroups else []
+                    seen_labels = {
+                        d.get("subgroup_label") for d in existing
+                    }
+                    for d in ai_dicts:
+                        label = d.get("subgroup_label")
+                        if label not in seen_labels:
+                            existing.append(d)
+                            seen_labels.add(label)
+                    existing.sort(
+                        key=lambda d: abs(d.get("deviation", 0.0)),
+                        reverse=True,
+                    )
+                    worst_subgroups = tuple(existing) if existing else None
+            except ImportError:
+                pass
 
         # Sample adequacy
         sample_adequacy_data = None

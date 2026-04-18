@@ -6,11 +6,16 @@ and clinical impact to help teams focus on what matters most.
 
 from __future__ import annotations
 
+import dataclasses
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import TYPE_CHECKING
 
 from parityscope.audit.result import AuditResult, FairnessLevel, MetricResult
 from parityscope.recommendations.mitigations import MitigationStrategy, get_mitigation_strategies
+
+if TYPE_CHECKING:
+    from parityscope.monitoring.store import MonitoringStore
 
 
 class Severity(str, Enum):
@@ -83,6 +88,9 @@ _CLINICAL_DESCRIPTIONS = {
 def prioritize_findings(
     result: AuditResult,
     root_cause_report: object | None = None,
+    use_ai: bool = False,
+    store: "MonitoringStore | None" = None,
+    model_name: str | None = None,
 ) -> list[PrioritizedIssue]:
     """Prioritize fairness findings by severity and impact.
 
@@ -201,6 +209,22 @@ def prioritize_findings(
             mitigation_strategies=strategies[:5],
             priority_score=round(priority, 1),
         ))
+
+    # AI-powered re-ranking of mitigation strategies (optional)
+    if use_ai:
+        try:
+            from parityscope.ai.recommendations import rank_strategies_ml
+            reranked: list[PrioritizedIssue] = []
+            for issue in issues:
+                ranked = rank_strategies_ml(
+                    issue, root_cause_report, store, model_name
+                )
+                reranked.append(
+                    dataclasses.replace(issue, mitigation_strategies=ranked)
+                )
+            issues = reranked
+        except ImportError:
+            pass
 
     issues.sort(key=lambda i: i.priority_score, reverse=True)
     return issues
