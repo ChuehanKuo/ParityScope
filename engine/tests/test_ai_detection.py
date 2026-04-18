@@ -312,3 +312,41 @@ class TestBiasPatternClustering:
             n_clusters=3,
         )
         assert len(patterns) == 3
+
+
+# ---------------------------------------------------------------------------
+# Backward-compat aliases
+# ---------------------------------------------------------------------------
+
+
+class TestBackwardCompatAliases:
+    """Renamed functions must keep the old public names as aliases."""
+
+    def test_backward_compat_aliases_exist(self):
+        # Import both the new and legacy names from the submodule and
+        # through the ``parityscope.ai`` package surface.
+        from parityscope import ai as ai_pkg
+        from parityscope.ai import detection, recommendations
+
+        # detection.py: discover_subgroups_ml → discover_subgroups_tree
+        assert detection.discover_subgroups_ml is detection.discover_subgroups_tree
+        assert ai_pkg.discover_subgroups_ml is ai_pkg.discover_subgroups_tree
+
+        # detection.py: detect_proxies_ml → detect_proxies_nonlinear
+        assert detection.detect_proxies_ml is detection.detect_proxies_nonlinear
+        assert ai_pkg.detect_proxies_ml is ai_pkg.detect_proxies_nonlinear
+
+        # recommendations.py: rank_strategies_ml → rank_strategies_scored
+        assert recommendations.rank_strategies_ml is recommendations.rank_strategies_scored
+        assert ai_pkg.rank_strategies_ml is ai_pkg.rank_strategies_scored
+
+        # And all six names are in the public __all__ so * imports keep working.
+        for name in (
+            "discover_subgroups_ml",
+            "discover_subgroups_tree",
+            "detect_proxies_ml",
+            "detect_proxies_nonlinear",
+            "rank_strategies_ml",
+            "rank_strategies_scored",
+        ):
+            assert name in ai_pkg.__all__, f"{name} missing from parityscope.ai.__all__"

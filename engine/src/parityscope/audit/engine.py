@@ -18,12 +18,14 @@ Usage:
 
 from __future__ import annotations
 
+import hashlib
 import uuid
 from datetime import datetime, timezone
 
 import numpy as np
 import pandas as pd
 
+import parityscope
 from parityscope.audit.result import (
     AuditResult,
     FairnessLevel,
@@ -33,6 +35,11 @@ from parityscope.audit.result import (
 from parityscope.data.validation import validate_audit_inputs
 from parityscope.metrics.registry import InputType, get_metric, list_metrics
 from parityscope.regulations.mapping import get_recommended_metrics
+
+# Bumped manually when any jurisdiction profile in
+# parityscope.regulations.mapping changes in a way that affects compliance
+# conclusions (article citations, penalty tiers, enforcement dates, etc.).
+REGULATION_PROFILE_VERSION = "2026-04-01"
 
 
 # Default thresholds for fairness assessment
@@ -135,6 +142,18 @@ class FairnessAudit:
             protected_attributes=self.protected_attributes,
             y_score=y_score_arr,
         )
+
+        # Canonical input hash for reproducibility / audit provenance.
+        try:
+            h = hashlib.sha256()
+            h.update(np.ascontiguousarray(y_true_arr).tobytes())
+            h.update(np.ascontiguousarray(y_pred_arr).tobytes())
+            h.update(demographics.to_csv(index=False).encode("utf-8"))
+            if y_score_arr is not None:
+                h.update(np.ascontiguousarray(y_score_arr).tobytes())
+            input_hash: str | None = h.hexdigest()
+        except Exception:
+            input_hash = None
 
         all_metric_results: list[MetricResult] = []
         ci_data: dict[str, dict] = {}
@@ -357,6 +376,9 @@ class FairnessAudit:
             worst_subgroups=worst_subgroups,
             sample_adequacy=sample_adequacy_data,
             confidence_intervals=ci_data if ci_data else None,
+            engine_version=getattr(parityscope, "__version__", ""),
+            regulation_profile_version=REGULATION_PROFILE_VERSION,
+            input_hash=input_hash,
         )
 
     @staticmethod

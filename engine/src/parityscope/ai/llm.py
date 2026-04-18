@@ -91,14 +91,26 @@ def _call_claude(
     model: str = DEFAULT_MODEL,
     max_tokens: int = DEFAULT_MAX_TOKENS,
 ) -> LLMResponse:
-    """Send a single message to Claude and return the text response."""
+    """Send a single message to Claude and return the text response.
+
+    The system prompt is passed as a list with ``cache_control`` set to
+    ``ephemeral`` so repeated calls benefit from Anthropic's prompt-caching
+    (≈90% token-cost reduction on cached portions). The per-call user
+    payload is not cached.
+    """
     client = _get_client(api_key)
 
     response = client.messages.create(
         model=model,
         max_tokens=max_tokens,
         thinking={"type": "adaptive"},
-        system=system,
+        system=[
+            {
+                "type": "text",
+                "text": system,
+                "cache_control": {"type": "ephemeral"},
+            }
+        ],
         messages=[{"role": "user", "content": user}],
     )
 

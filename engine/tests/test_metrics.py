@@ -171,11 +171,13 @@ class TestMetricRegistry:
 
     def test_list_all_metrics(self):
         all_metrics = list_metrics()
-        assert len(all_metrics) == 15  # 12 classification + 3 calibration
+        # 14 classification (12 binary + 2 threshold-free score-based)
+        # + 4 calibration (3 existing + 1 threshold-free slope parity)
+        assert len(all_metrics) == 18
 
     def test_filter_by_category(self):
         cal_metrics = list_metrics(category=MetricCategory.CALIBRATION)
-        assert len(cal_metrics) == 3
+        assert len(cal_metrics) == 4
         assert all(m.category == MetricCategory.CALIBRATION for m in cal_metrics)
 
     def test_filter_by_input_type(self):

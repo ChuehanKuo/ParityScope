@@ -30,7 +30,7 @@ const footerLinks = {
   ],
   Company: [
     { label: "About", href: "/about" },
-    { label: "Team", href: "/about/team" },
+    { label: "Founder's Note", href: "/about/team" },
     { label: "Mission", href: "/about/mission" },
     { label: "Careers", href: "/about/careers" },
     { label: "Contact", href: "/contact" },

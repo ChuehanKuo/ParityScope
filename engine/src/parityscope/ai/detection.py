@@ -24,7 +24,7 @@ from parityscope.rootcause.proxy_detection import ProxyVariable
 # ---------------------------------------------------------------------------
 
 
-def discover_subgroups_ml(
+def discover_subgroups_tree(
     y_true: np.ndarray,
     y_pred: np.ndarray,
     demographics: pd.DataFrame,
@@ -36,9 +36,11 @@ def discover_subgroups_ml(
 ) -> list[SubgroupFinding]:
     """Discover underperforming subgroups using a decision-tree error model.
 
-    Trains a tree to predict misclassification from demographic (and optional
-    feature) columns, then extracts leaf nodes whose error rate exceeds the
-    population baseline.
+    This is a tree-based ML approach: it trains a ``DecisionTreeClassifier``
+    to predict misclassification from demographic (and optional feature)
+    columns, then extracts leaf nodes whose error rate exceeds the population
+    baseline. The name highlights the specific method (decision tree) rather
+    than the generic "ML" label.
 
     Args:
         y_true: Ground-truth binary labels.
@@ -160,7 +162,7 @@ def discover_subgroups_ml(
 # ---------------------------------------------------------------------------
 
 
-def detect_proxies_ml(
+def detect_proxies_nonlinear(
     X: pd.DataFrame,
     demographics: pd.DataFrame,
     protected_attributes: list[str],
@@ -168,11 +170,14 @@ def detect_proxies_ml(
     n_estimators: int = 100,
     max_depth: int = 5,
 ) -> list[ProxyVariable]:
-    """Detect proxy variables using mutual information and gradient boosting.
+    """Detect proxy variables using nonlinear dependence measures.
 
     For each protected attribute, computes a composite proxy score combining
     normalised mutual information (weight 0.4) and gradient-boosting feature
-    importance (weight 0.6).
+    importance (weight 0.6). "Nonlinear" is a more precise descriptor than
+    "ML" — mutual information captures arbitrary statistical dependence and
+    gradient boosting captures nonlinear predictive relationships, neither
+    of which a linear correlation would surface.
 
     Args:
         X: Feature matrix (may contain numeric and categorical columns).
@@ -492,3 +497,16 @@ def _encode_for_ml(X: pd.DataFrame) -> np.ndarray:
         else:
             result[col] = series.fillna(0).astype(float)
     return result.values
+
+
+# ---------------------------------------------------------------------------
+# Backward-compatible aliases (deprecated — use the renamed functions above)
+# ---------------------------------------------------------------------------
+
+#: Deprecated alias for :func:`discover_subgroups_tree`. Retained for
+#: backward compatibility; new code should use the precise name.
+discover_subgroups_ml = discover_subgroups_tree
+
+#: Deprecated alias for :func:`detect_proxies_nonlinear`. Retained for
+#: backward compatibility; new code should use the precise name.
+detect_proxies_ml = detect_proxies_nonlinear

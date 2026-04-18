@@ -9,12 +9,18 @@ try:
         BiasPattern,
         cluster_bias_patterns,
         detect_proxies_ml,
+        detect_proxies_nonlinear,
         discover_subgroups_ml,
+        discover_subgroups_tree,
     )
 
     __all__ += [
         "BiasPattern",
         "cluster_bias_patterns",
+        # New, honest names
+        "detect_proxies_nonlinear",
+        "discover_subgroups_tree",
+        # Backward-compatible aliases (deprecated)
         "detect_proxies_ml",
         "discover_subgroups_ml",
     ]
@@ -53,6 +59,7 @@ try:
         generate_executive_summary,
         generate_remediation_plan,
         rank_strategies_ml,
+        rank_strategies_scored,
         track_mitigation_effectiveness,
     )
 
@@ -63,6 +70,9 @@ try:
         "RemediationStep",
         "generate_executive_summary",
         "generate_remediation_plan",
+        # New, honest name
+        "rank_strategies_scored",
+        # Backward-compatible alias (deprecated)
         "rank_strategies_ml",
         "track_mitigation_effectiveness",
     ]

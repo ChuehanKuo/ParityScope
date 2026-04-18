@@ -149,9 +149,9 @@ export const navLinks = [
         description: "Why we're building ParityScope",
       },
       {
-        label: "Team",
+        label: "Founder's Note",
         href: "/about/team",
-        description: "Meet the people behind ParityScope",
+        description: "Our story, what we've built, and what we are not",
       },
       {
         label: "Careers",

@@ -83,7 +83,17 @@ class TestGenerateNarrativeMocked:
         call_kwargs = mock_client.messages.create.call_args.kwargs
         assert call_kwargs["model"] == DEFAULT_MODEL
         assert call_kwargs["thinking"] == {"type": "adaptive"}
-        assert "executive" in call_kwargs["system"].lower() or "executive" in str(call_kwargs)
+
+        # System prompt must be a list of typed blocks with cache_control set
+        # so Anthropic's prompt cache can short-circuit repeated calls.
+        system_blocks = call_kwargs["system"]
+        assert isinstance(system_blocks, list)
+        assert len(system_blocks) >= 1
+        first_block = system_blocks[0]
+        assert first_block["type"] == "text"
+        assert first_block.get("cache_control") == {"type": "ephemeral"}
+        # And the executive-audience text should be in the cached system block.
+        assert "executive" in first_block["text"].lower()
 
     def test_audience_changes_system_prompt(self, sample_audit_result):
         from parityscope.ai import llm

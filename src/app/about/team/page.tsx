@@ -2,227 +2,120 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Our Team — ParityScope",
+  title: "Our Story — ParityScope",
   description:
-    "Meet the AI researchers, healthcare domain experts, and engineers behind ParityScope.",
+    "A founder's note on why ParityScope exists, what we've built, and what we are not.",
 };
 
-const teamMembers = [
-  {
-    name: "Team Member",
-    role: "Co-Founder & CEO",
-    bio: "Background in healthcare technology and regulatory affairs. Previously led digital health initiatives at a major European health system. Passionate about closing the gap between AI innovation and health equity.",
-  },
-  {
-    name: "Team Member",
-    role: "Co-Founder & CTO",
-    bio: "Machine learning researcher with expertise in algorithmic fairness and bias mitigation. Published work on fairness metrics for clinical AI systems. Former research scientist at a leading AI lab.",
-  },
-  {
-    name: "Team Member",
-    role: "Head of Product",
-    bio: "Product leader with deep experience in healthcare SaaS and compliance tooling. Focused on making fairness auditing accessible to clinical and technical teams alike.",
-  },
-  {
-    name: "Team Member",
-    role: "Lead Engineer",
-    bio: "Full-stack engineer specializing in privacy-preserving analytics and SDK design. Previously built data infrastructure for healthcare analytics platforms.",
-  },
-  {
-    name: "Team Member",
-    role: "Clinical AI Researcher",
-    bio: "PhD in biomedical informatics with a focus on health disparities and clinical decision support. Bridges the gap between fairness theory and clinical practice.",
-  },
-  {
-    name: "Team Member",
-    role: "Regulatory & Compliance Lead",
-    bio: "Healthcare regulatory specialist with expertise in the EU AI Act, FDA software guidance, and Section 1557. Ensures ParityScope stays ahead of global compliance requirements.",
-  },
-];
-
-const advisors = [
-  {
-    name: "Advisor",
-    role: "Clinical Ethics",
-    bio: "Professor of bioethics at a leading university medical school. Research focuses on the ethical implications of AI in clinical decision-making and health equity.",
-  },
-  {
-    name: "Advisor",
-    role: "AI Regulation",
-    bio: "Former regulator with expertise in AI policy across EU and Asia-Pacific jurisdictions. Advises on regulatory strategy and government affairs.",
-  },
-  {
-    name: "Advisor",
-    role: "Health Systems",
-    bio: "Former Chief Medical Information Officer at a top academic medical center. Brings deep operational experience in deploying and governing clinical AI at scale.",
-  },
-  {
-    name: "Advisor",
-    role: "Machine Learning",
-    bio: "Distinguished researcher in fairness-aware machine learning. Authored foundational papers on algorithmic fairness metrics and bias mitigation techniques.",
-  },
-];
-
-export default function TeamPage() {
+export default function FoundersNotePage() {
   return (
     <>
       {/* Hero */}
       <section className="bg-navy px-4 py-24 text-white sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <h1 className="text-h1 font-bold leading-tight lg:text-display">
-            Our Team
+        <div className="mx-auto max-w-4xl">
+          <p className="text-body-sm font-semibold uppercase tracking-wider text-teal">
+            A founder&rsquo;s note
+          </p>
+          <h1 className="mt-4 text-h1 font-bold leading-tight lg:text-display">
+            Our Story
           </h1>
           <p className="mt-6 max-w-3xl text-body-lg text-light-gray">
-            We are a team of AI researchers, healthcare domain experts,
-            regulatory specialists, and software engineers united by a shared
-            conviction: healthcare AI must work fairly for every patient.
+            ParityScope is early. Here&rsquo;s what we&rsquo;re building and why.
           </p>
         </div>
       </section>
 
-      {/* Team Grid */}
+      {/* Founder's Note */}
       <section className="px-4 py-section sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-h2 font-bold text-navy">Leadership</h2>
-          <p className="mt-4 max-w-3xl text-body-lg text-medium-gray">
-            Our founding team brings together expertise from AI research,
-            clinical medicine, healthcare regulation, and enterprise software.
+        <article className="mx-auto max-w-3xl space-y-6 text-body-lg leading-relaxed text-dark-gray">
+          <p>
+            Algorithmic fairness in healthcare is not a checkbox. A miscalibrated
+            sepsis model, a pulse oximeter that underestimates hypoxia in darker
+            skin, a readmission score that systematically underserves a
+            neighborhood &mdash; these are not abstract risks. They are
+            operational failures with clinical consequences, and the tools
+            hospitals and MedTech vendors have today were not built for them.
+            Horizontal AI governance platforms treat a loan-approval model and a
+            clinical decision support tool as the same object. They are not.
           </p>
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {teamMembers.map((member, index) => (
-              <div
-                key={index}
-                className="rounded-2xl border border-light-gray p-6 shadow-card transition-shadow hover:shadow-card-hover"
-              >
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-navy-light">
-                  <svg
-                    className="h-8 w-8 text-light-gray"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="mt-4 text-h4 font-semibold text-navy">
-                  {member.name}
-                </h3>
-                <p className="text-body-sm font-medium text-teal">
-                  {member.role}
-                </p>
-                <p className="mt-3 text-body-sm text-medium-gray">
-                  {member.bio}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Advisors */}
-      <section className="bg-off-white px-4 py-section sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-h2 font-bold text-navy">Our Advisors</h2>
-          <p className="mt-4 max-w-3xl text-body-lg text-medium-gray">
-            We are guided by advisors with deep expertise in clinical ethics,
-            AI regulation, health systems, and machine learning research.
+          <p>
+            ParityScope exists because healthcare AI deserves a fairness audit
+            built for healthcare &mdash; one that speaks the vocabulary of
+            Notified Bodies, FDA GMLP, Section 1557, CHAI, and the emerging
+            frameworks in South Korea and Taiwan, not a generic ISO checklist
+            retrofitted onto a clinical use case.
           </p>
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {advisors.map((advisor, index) => (
-              <div
-                key={index}
-                className="rounded-2xl border border-light-gray bg-white p-6 shadow-card transition-shadow hover:shadow-card-hover"
-              >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal/10">
-                  <svg
-                    className="h-7 w-7 text-teal"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="mt-4 text-h4 font-semibold text-navy">
-                  {advisor.name}
-                </h3>
-                <p className="text-body-sm font-medium text-teal">
-                  {advisor.role}
-                </p>
-                <p className="mt-3 text-body-sm text-medium-gray">
-                  {advisor.bio}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Values */}
-      <section className="px-4 py-section sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-h2 font-bold text-navy">Our Values</h2>
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                title: "Patient First",
-                description:
-                  "Every decision we make is guided by one question: does this make healthcare AI fairer for patients?",
-              },
-              {
-                title: "Scientific Rigor",
-                description:
-                  "We use validated, peer-reviewed methods. Our metrics are grounded in statistical theory and clinical evidence.",
-              },
-              {
-                title: "Transparency",
-                description:
-                  "We build tools that make AI explainable. We practice what we preach — our methods, assumptions, and limitations are always documented.",
-              },
-              {
-                title: "Global Perspective",
-                description:
-                  "Health equity is a global challenge. We build for healthcare organizations everywhere, not just one market.",
-              },
-            ].map((value) => (
-              <div key={value.title} className="text-center">
-                <h3 className="text-h4 font-semibold text-navy">
-                  {value.title}
-                </h3>
-                <p className="mt-3 text-body-sm text-medium-gray">
-                  {value.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+          <p>
+            <strong className="text-navy">What&rsquo;s built today.</strong>{" "}
+            A Python audit engine with 15 fairness metrics, bootstrap confidence
+            intervals, and statistical power diagnostics. Continuous monitoring
+            with drift detection, CUSUM changepoint analysis, and anomaly
+            alerting. Root-cause tooling for proxy detection, label bias, and
+            representation gaps. Recommendations with priority ranking and
+            tradeoff analysis. Regulatory mapping for five jurisdictions: the
+            EU AI Act, US FDA SaMD guidance and Section 1557, South Korea&rsquo;s
+            AI Act, and Taiwan&rsquo;s AI Basic Act. CLI, REST API, and library
+            interfaces, so the audit lives where your model does.
+          </p>
+
+          <p>
+            <strong className="text-navy">What we are not.</strong>{" "}
+            We are not a validation lab &mdash; we do not certify models or
+            issue conformity decisions. We are not a generic AI governance
+            platform &mdash; we do not sell to banks or insurers. We are not a
+            consulting firm &mdash; we ship software, not slide decks. If you
+            need a head count of compliance analysts, hire one. If you need
+            reproducible, regulator-ready audit evidence, that is what we do.
+          </p>
+
+          <p>
+            <strong className="text-navy">We are early.</strong> Our initial
+            focus is MedTech vendors preparing for EU conformity assessment and
+            health systems building audit documentation for Joint Commission or
+            CHAI certification. If you sit outside those two lanes, we will
+            still talk &mdash; but those are the customers we are currently
+            best positioned to serve.
+          </p>
+
+          <p>
+            <strong className="text-navy">On the team you don&rsquo;t see on
+            this page.</strong>{" "}
+            We are building out our clinical advisory board and will update
+            this page with their names as agreements finalize. We would rather
+            publish nothing than publish placeholders. If you are a health AI
+            ethics researcher, clinical informaticist, or regulatory affairs
+            expert interested in advising, reach out.
+          </p>
+
+          <p>
+            The fastest way to reach me is{" "}
+            <Link
+              href="mailto:hello@parityscope.com"
+              className="font-semibold text-teal hover:text-teal-dark"
+            >
+              hello@parityscope.com
+            </Link>
+            . I read every message.
+          </p>
+        </article>
       </section>
 
       {/* CTA */}
       <section className="bg-navy px-4 py-section text-white sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-h2 font-bold">Join Our Team</h2>
+          <h2 className="text-h2 font-bold">Book a paid assessment</h2>
           <p className="mt-4 text-body-lg text-light-gray">
-            We are building the global standard for healthcare AI fairness. If
-            you are passionate about health equity, algorithmic fairness, or
-            healthcare technology, we want to hear from you.
+            A 90-day engagement that produces audit evidence you can put in a
+            regulatory binder &mdash; not a pitch deck.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              href="/about/careers"
+              href="/contact"
               className="rounded-full bg-teal px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-teal-dark"
             >
-              View Open Positions
+              Book an Assessment
             </Link>
             <Link
               href="/about/mission"

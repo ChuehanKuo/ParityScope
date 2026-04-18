@@ -71,6 +71,12 @@ class AuditResult:
     sample_adequacy: dict | None = None
     confidence_intervals: dict | None = None
 
+    # Provenance (v0.2.1+) — kept optional for backward compatibility with
+    # older serialized results.
+    engine_version: str = ""
+    regulation_profile_version: str = ""
+    input_hash: str | None = None
+
     @property
     def unfair_metrics(self) -> list[MetricResult]:
         """Return metrics flagged as unfair."""
@@ -152,6 +158,10 @@ class AuditResult:
             result["sample_adequacy"] = self.sample_adequacy
         if self.confidence_intervals is not None:
             result["confidence_intervals"] = self.confidence_intervals
+        # Provenance fields (always emitted; empty strings if unset)
+        result["engine_version"] = self.engine_version
+        result["regulation_profile_version"] = self.regulation_profile_version
+        result["input_hash"] = self.input_hash
         return result
 
     @staticmethod

@@ -1,0 +1,92 @@
+---
+title: "The Court Just Ordered UnitedHealth to Disclose Its AI — Is Your Algorithm Next?"
+description: "Federal regulators have gone quiet on Section 1557 AI provisions. But plaintiffs' attorneys just got a court order to disclose nH Predict. Litigation is now the real enforcement mechanism for healthcare AI bias."
+date: "2026-04-05"
+author: "ParityScope Team"
+authorRole: "Regulatory Affairs"
+tags: ["Section 1557", "Litigation", "Healthcare AI", "Compliance"]
+published: true
+---
+
+In March 2026, a federal judge in the District of Minnesota ordered UnitedHealth Group to disclose the internal workings of **nH Predict**, the AI model its subsidiary NaviHealth has used to inform post-acute care coverage determinations for Medicare Advantage beneficiaries. The order, entered in *Estate of Gene B. Lokken et al. v. UnitedHealth Group, Inc., et al.* (D. Minn., No. 0:23-cv-03514), compels production of model documentation, training data descriptions, and performance evidence to plaintiffs' counsel under a protective order.
+
+This is the first major federal order requiring a healthcare insurer to disclose a decision-making AI model to adversarial parties in class litigation. It will not be the last.
+
+For healthcare AI operators watching this case, the facts are straightforward. The enforcement implications are not.
+
+## The Case: What Actually Happened
+
+*Lokken* was filed in November 2023 on behalf of the estates of two deceased Medicare Advantage beneficiaries whose post-acute care stays were cut short following nH Predict-informed determinations. The complaint, building on a STAT News investigation earlier that year, alleges that UnitedHealth used the model to override clinician judgment about medically necessary skilled nursing facility stays, and that internal documents show the model's predictions had a **roughly 90% reversal rate on appeal** -- a figure the complaint argues demonstrates the model was not serving as a legitimate clinical decision support tool.
+
+The case has moved:
+
+- **November 2023**: Complaint filed.
+- **February 2025**: The court denied UnitedHealth's motion to dismiss in key respects and allowed the class certification process to proceed.
+- **March 2026**: Discovery order compelling disclosure of the model to plaintiffs, including training data characterization and validation evidence.
+
+DLA Piper's April 2025 client advisory flagged the pending case as the bellwether for algorithmic litigation exposure in managed care. The March 2026 order confirms that framing.
+
+## Why Federal Enforcement Stalled
+
+The contrast with the regulatory side is stark. The **Section 1557 final rule** published by HHS OCR in May 2024 included new provisions extending the non-discrimination prohibition to "patient care decision support tools," including AI-driven tools. Compliance obligations around these provisions began phasing in through 2025.
+
+Then the signals changed. Through 2025 and into 2026:
+
+- OCR has not announced a single enforcement action under the Section 1557 algorithmic provisions.
+- HHS leadership under the new administration has publicly questioned the scope of the 1557 rule, and litigation challenging portions of the rule remains live in multiple districts.
+- The FTC's AI-related enforcement activity has narrowed.
+- Federal agency guidance documents on AI and civil rights have been paused or withdrawn for review.
+
+The net effect is a federal enforcement vacuum for healthcare AI bias claims through conventional regulatory channels. Not a repeal -- a quiet stand-down.
+
+## Why Litigation Is Filling the Vacuum
+
+Three mechanisms make private litigation a durable enforcement substitute, regardless of what any single administration does:
+
+**1. Statutory standing.** Beneficiaries denied care under an algorithm have concrete, particularized injuries. Section 1557 itself provides a private right of action. ERISA, state insurance codes, and state consumer protection statutes provide additional causes. Plaintiffs do not need OCR.
+
+**2. Discovery is the great equalizer.** Federal civil procedure allows plaintiffs to subpoena algorithm internals, training data, validation studies, and internal correspondence. The *Lokken* order is a template. Trade-secret assertions slow this process but rarely defeat it; protective orders allow inspection while limiting public disclosure. Once the model is on the table, the case becomes one of expert witnesses arguing over subgroup performance, calibration, and reversal rates.
+
+**3. Class mechanics create damages at scale.** A Medicare Advantage plan with millions of enrollees denying post-acute care based on a single model creates a natural class. Damages aggregate. The economics support plaintiff-side investment in expert witnesses and discovery fights that individual claimants could not sustain.
+
+**4. State-level laws add ammunition.** Colorado's SB 205 (the Colorado AI Act), NYC Local Law 144, California's ADMT rules under CCPA, and Illinois' AI Video Interview Act each create additional rights of action or regulatory hooks that plaintiffs incorporate into complaints. These do not depend on federal enforcement posture.
+
+## What Defensible Documentation Looks Like in Discovery
+
+The *Lokken* order is useful because it clarifies what plaintiffs will ask for. The operators who weather discovery well have documentation with four properties:
+
+**Pre-deployment audit with reproducible methodology.** A dated record, prior to deployment, showing that the model was evaluated for demographic performance disparities using a documented methodology. Reproducibility matters: the input data, random seeds, and analysis code should allow an expert to re-run the audit and get the same result.
+
+**Ongoing monitoring with documented thresholds.** Continuous evaluation of real-world performance, with thresholds for action defined before the data arrived, not after. "We set a 5% disparity threshold in our monitoring plan dated March 2025" is a much stronger position than "we looked at the numbers and they seemed fine."
+
+**Mitigation plan for identified disparities.** When audits or monitoring surface a disparity, the record should show what was decided, by whom, and with what clinical justification. Documented deliberation -- even a decision not to intervene -- is discoverable and defensible. Silence is neither.
+
+**Version history showing due diligence.** Model versions, audit versions, policy versions. An organization that can show it tightened its monitoring over time as evidence accumulated is in a different posture than one whose audit posture is unchanged since deployment.
+
+The *Lokken* plaintiffs are not arguing nH Predict should never have been built. They are arguing that UnitedHealth used a model with a 90% appeal-reversal rate in a way that overrode clinical judgment, and that the company's documentation does not show the due diligence the law requires. That is a claim about evidence, not about technology.
+
+## Who Is Exposed
+
+Litigation risk is not evenly distributed. First-order exposure sits with:
+
+- **Medicare Advantage plans** using AI for prior authorization, post-acute care, or utilization management. *Lokken* is the lead case; multiple follow-on class actions against Humana, Cigna, and others are in earlier stages.
+- **Hospital systems running clinical decision support** that materially influences care decisions -- sepsis alerts, deterioration scores, discharge prediction, triage.
+- **Medical device manufacturers** with FDA-cleared AI-enabled devices, particularly those where post-market performance data is thin.
+- **Health insurers generally**, including ACA marketplace plans, where Section 1557 applies directly.
+
+Second-order exposure reaches AI vendors whose tools are embedded in any of the above. Indemnification provisions in master services agreements will be tested as these cases progress. Vendors who can produce independent audit documentation for their models are a less attractive litigation target than those who cannot.
+
+## What This Means Now
+
+For organizations operating healthcare AI, the regulatory vacuum should not be mistaken for a reprieve. Plaintiffs' attorneys read the same headlines and draw the opposite conclusion: when agencies go quiet, private rights of action become the enforcement mechanism, and discovery becomes the audit.
+
+The practical implications:
+
+1. **Every AI system with a material clinical or coverage impact should have a dated, methodologically documented, reproducible bias audit on file**, generated prior to deployment or, if already deployed, as soon as possible.
+2. **Ongoing monitoring should be operating, not planned**, with thresholds set in advance and deliberation records preserved.
+3. **Documentation should be independent where it matters**, because "we ran the vendor's dashboard" is a weaker discovery position than "we retained an independent auditor with a published methodology."
+4. **Vendor contracts should clarify responsibility for audit evidence** when a subpoena arrives.
+
+Independent, reproducible audit documentation is useful in exactly the moment it is most expensive to create: when opposing counsel is already at the door. Organizations that build this evidence layer now will spend the next two years creating records that protect them. Organizations that wait will spend those years discovering that "we meant to get to it" is not a defense.
+
+The *Lokken* order is not an anomaly. It is a preview.

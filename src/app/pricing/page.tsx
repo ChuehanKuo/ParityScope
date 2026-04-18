@@ -3,156 +3,288 @@ import Link from "next/link";
 import { JsonLd } from "@/components/shared/json-ld";
 
 export const metadata: Metadata = {
-  title: "Pricing — Transparent Pricing for Every Stage",
+  title: "Pricing — ParityScope Fairness Auditing",
   description:
-    "Transparent pricing for ParityScope's AI fairness auditing, monitoring, and compliance tools. From one-time assessments to enterprise solutions.",
+    "Transparent pricing for ParityScope's AI fairness auditing, monitoring, and compliance tools. Free developer tier, annual subscriptions for clinical AI teams, and enterprise deployments for health systems.",
 };
 
 const tiers = [
   {
-    name: "Assessment",
-    price: "\u20AC25,000",
-    period: "one-time",
-    description: "Expert-led fairness audit to identify and address bias in your clinical AI systems.",
+    name: "Developer",
+    price: "Free",
+    period: "",
+    description:
+      "For individual researchers, students, and teams evaluating ParityScope before purchase.",
     features: [
-      "Expert-led fairness audit",
-      "Up to 3 AI models",
-      "15+ fairness metrics",
-      "All protected attributes",
-      "Regulatory compliance report",
-      "Mitigation recommendations",
-      "90-day pilot included",
+      "1 model",
+      "100 samples per audit",
+      "All 15+ core fairness metrics",
+      "Community support (GitHub Discussions)",
+      "Local CLI + Python SDK",
+      "No regulatory reports",
     ],
-    cta: "Request Assessment",
+    cta: "Download SDK",
+    ctaHref: "/developers",
     highlighted: false,
-    note: "Pilot fees 100% credited toward full contract",
+    note: null,
   },
   {
-    name: "SDK License",
-    price: "\u20AC30,000",
+    name: "Team",
+    price: "\u20AC12,000",
     period: "/year",
-    description: "Self-serve toolkit for ongoing fairness testing integrated into your pipeline.",
+    description:
+      "For ML engineers at clinical AI startups running bias audits in CI/CD.",
     features: [
-      "Everything in Assessment",
-      "Self-serve SDK access",
-      "Up to 5 AI models",
+      "3 models",
+      "10,000 samples per audit",
+      "EU AI Act, FDA, and NIST AI RMF reports",
+      "Basic continuous monitoring",
       "CI/CD integration",
-      "Multi-jurisdiction mapping",
-      "PDF & JSON reports",
-      "Email support",
+      "Email support (2 business day SLA)",
     ],
-    cta: "Book an Assessment",
+    cta: "Start Team Plan",
+    ctaHref: "/contact",
+    highlighted: false,
+    note: null,
+  },
+  {
+    name: "Professional",
+    price: "\u20AC75,000",
+    period: "/year",
+    description:
+      "For mid-market health systems and MedTech companies with production AI portfolios.",
+    features: [
+      "10 models",
+      "Unlimited samples",
+      "Continuous monitoring with statistical drift detection",
+      "All jurisdictions (EU, US, South Korea, Taiwan, UK, Singapore)",
+      "SOC 2 Type II documentation package",
+      "Email + dedicated Slack support",
+      "Quarterly expert review sessions",
+    ],
+    cta: "Request Demo",
+    ctaHref: "/contact",
     highlighted: true,
     note: null,
   },
   {
     name: "Enterprise",
-    price: "Custom",
-    period: "",
-    description: "Full-scale AI governance for large organizations with complex requirements.",
+    price: "Starting \u20AC150,000",
+    period: "/year",
+    description:
+      "For large health systems and MedTech platforms with complex governance requirements.",
     features: [
-      "Everything in SDK License",
       "Unlimited models",
-      "Continuous monitoring",
-      "Fairness drift alerts",
-      "REST API access",
-      "Dedicated CSM",
+      "Dedicated Customer Success Manager",
       "On-premise deployment",
-      "Custom SLA",
+      "Custom integrations (EHR, MLOps)",
+      "RBAC and audit logging",
+      "Priority support with custom SLA",
+      "Legal and regulatory advisory hours",
     ],
     cta: "Contact Sales",
+    ctaHref: "/contact",
     highlighted: false,
     note: null,
   },
 ];
 
 const comparisonFeatures = [
-  { feature: "Number of models", assessment: "Up to 3", sdk: "Up to 5", enterprise: "Unlimited" },
-  { feature: "Fairness metrics", assessment: "15+", sdk: "15+", enterprise: "15+ custom" },
-  { feature: "Protected attributes", assessment: "All", sdk: "All", enterprise: "All + custom" },
-  { feature: "Compliance report", assessment: "Yes", sdk: "Yes", enterprise: "Yes" },
-  { feature: "Mitigation recommendations", assessment: "Yes", sdk: "Yes", enterprise: "Yes" },
-  { feature: "SDK access", assessment: "\u2014", sdk: "Yes", enterprise: "Yes" },
-  { feature: "CI/CD integration", assessment: "\u2014", sdk: "Yes", enterprise: "Yes" },
-  { feature: "Multi-jurisdiction mapping", assessment: "\u2014", sdk: "Yes", enterprise: "Yes" },
-  { feature: "Continuous monitoring", assessment: "\u2014", sdk: "\u2014", enterprise: "Yes" },
-  { feature: "Drift alerts", assessment: "\u2014", sdk: "\u2014", enterprise: "Yes" },
-  { feature: "REST API", assessment: "\u2014", sdk: "\u2014", enterprise: "Yes" },
-  { feature: "Dedicated CSM", assessment: "\u2014", sdk: "\u2014", enterprise: "Yes" },
-  { feature: "On-premise deployment", assessment: "\u2014", sdk: "\u2014", enterprise: "Yes" },
-  { feature: "Support", assessment: "Email", sdk: "Email", enterprise: "Dedicated" },
+  {
+    feature: "Number of models",
+    developer: "1",
+    team: "3",
+    professional: "10",
+    enterprise: "Unlimited",
+  },
+  {
+    feature: "Samples per audit",
+    developer: "100",
+    team: "10,000",
+    professional: "Unlimited",
+    enterprise: "Unlimited",
+  },
+  {
+    feature: "Core fairness metrics",
+    developer: "All 15+",
+    team: "All 15+",
+    professional: "All 15+",
+    enterprise: "All 15+ and custom",
+  },
+  {
+    feature: "Regulatory reports",
+    developer: "\u2014",
+    team: "EU AI Act, FDA, NIST",
+    professional: "All jurisdictions",
+    enterprise: "All + custom mappings",
+  },
+  {
+    feature: "Continuous monitoring",
+    developer: "\u2014",
+    team: "Basic",
+    professional: "Statistical drift detection",
+    enterprise: "Custom alerting",
+  },
+  {
+    feature: "CI/CD integration",
+    developer: "\u2014",
+    team: "Yes",
+    professional: "Yes",
+    enterprise: "Yes",
+  },
+  {
+    feature: "REST API",
+    developer: "\u2014",
+    team: "Yes",
+    professional: "Yes",
+    enterprise: "Yes",
+  },
+  {
+    feature: "SOC 2 Type II docs",
+    developer: "\u2014",
+    team: "\u2014",
+    professional: "Yes",
+    enterprise: "Yes",
+  },
+  {
+    feature: "On-premise deployment",
+    developer: "\u2014",
+    team: "\u2014",
+    professional: "\u2014",
+    enterprise: "Yes",
+  },
+  {
+    feature: "RBAC and audit logging",
+    developer: "\u2014",
+    team: "\u2014",
+    professional: "\u2014",
+    enterprise: "Yes",
+  },
+  {
+    feature: "Dedicated CSM",
+    developer: "\u2014",
+    team: "\u2014",
+    professional: "\u2014",
+    enterprise: "Yes",
+  },
+  {
+    feature: "Support",
+    developer: "Community",
+    team: "Email (2 BD SLA)",
+    professional: "Email + Slack",
+    enterprise: "Priority + custom SLA",
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I start with an Assessment and upgrade later?",
+    question: "How does the Assessment pilot convert to a paid tier?",
     answer:
-      "Yes. The Assessment is designed as an on-ramp. 100% of your pilot fees are credited toward a full SDK License or Enterprise contract, so there is no wasted investment.",
+      "The \u20AC25,000 Assessment is a 90-day expert-led audit covering up to 3 models, full compliance reports, and a mitigation roadmap. If you sign an annual Professional or Enterprise contract within 12 months, 100% of the Assessment fee is credited against the first-year subscription. The Assessment is the recommended on-ramp for health systems that have never run a formal fairness audit.",
+  },
+  {
+    question: "Why is pricing listed in EUR?",
+    answer:
+      "ParityScope's primary market is EU MedTech vendors and health systems preparing for the EU AI Act (Annex III high-risk AI). We quote in EUR because most of our customers contract in EUR. USD and GBP contracts are available on request at the prevailing spot rate.",
+  },
+  {
+    question: "What is the difference between Team and Professional?",
+    answer:
+      "Team (\u20AC12,000/year) is sized for a clinical AI startup auditing up to 3 models with sample sizes typical of validation sets (10,000 rows). It covers the three frameworks most early-stage teams need: EU AI Act, FDA, and NIST AI RMF. Professional (\u20AC75,000/year) is sized for a health system or mid-market MedTech with up to 10 models in production, unlimited sample sizes, continuous statistical drift monitoring, all regulatory jurisdictions, SOC 2 documentation, and Slack support with quarterly expert review.",
+  },
+  {
+    question: "Which tier supports on-premise deployment?",
+    answer:
+      "On-premise deployment is an Enterprise-only feature. The Team and Professional tiers run ParityScope as a cloud-hosted service, but audits execute against your data within your infrastructure via the SDK \u2014 patient data never leaves your environment. Enterprise deployments additionally host the monitoring dashboard and API server inside your network perimeter.",
+  },
+  {
+    question: "Do you offer reseller or Notified Body partnerships?",
+    answer:
+      "Yes. We partner with Notified Bodies, regulatory consultancies, and EHR vendors under a custom program that includes white-labeling, per-assessment royalties, and co-branded compliance reports. Contact sales for partnership terms.",
   },
   {
     question: "What counts as a 'model' for pricing purposes?",
     answer:
-      "A model is a single AI system or algorithm being audited. Different versions of the same model count as one model. If you retrain a model, re-auditing the new version does not count as an additional model.",
+      "A model is a single AI system or algorithm being audited. Different versions of the same model count as one model. Retraining and re-auditing a new version does not consume an additional model slot.",
   },
   {
-    question: "Do you support on-premise deployment?",
+    question: "Is there a free trial of paid tiers?",
     answer:
-      "Yes. Our SDK runs entirely within your infrastructure — patient data never leaves your environment. For Enterprise customers, we also support fully on-premise deployment of the monitoring dashboard and API server.",
-  },
-  {
-    question: "Which regulatory frameworks do you support?",
-    answer:
-      "ParityScope maps to the EU AI Act, US Section 1557, South Korea AI Framework Act, and Taiwan AI Basic Law. Enterprise customers can request additional jurisdiction mappings.",
-  },
-  {
-    question: "How long does an Assessment take?",
-    answer:
-      "A typical Assessment takes 4-6 weeks from kickoff to final report delivery. This includes data collection, audit configuration, analysis, and presentation of findings and recommendations.",
-  },
-  {
-    question: "Is there a free trial of the SDK?",
-    answer:
-      "Yes. We offer a 30-day free trial with access to 1 model and 5,000 samples. Contact us to receive your trial license key.",
+      "The Developer tier is permanently free and lets you evaluate ParityScope against a single model with 100 samples. For paid tiers, we recommend the \u20AC25,000 Assessment as a low-risk, fully-credited entry point.",
   },
 ];
+
+const tierGridClass = "grid gap-6 lg:grid-cols-4";
 
 export default function PricingPage() {
   return (
     <>
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: faqs.map((faq) => ({
-          "@type": "Question",
-          name: faq.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: faq.answer,
-          },
-        })),
-      }} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }}
+      />
       {/* Hero */}
       <section className="bg-navy px-4 py-24 text-white sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl text-center">
           <h1 className="text-h1 font-bold leading-tight lg:text-display">
-            Transparent Pricing for Every Stage
+            Pricing built for clinical AI teams
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-body-lg text-light-gray">
-            Start with an expert-led assessment, scale with our SDK, or go
-            enterprise for unlimited AI governance. Every plan includes full
-            regulatory compliance support.
+            Start free. Pay annually as your portfolio grows. Scale to
+            enterprise deployments with dedicated support, on-premise hosting,
+            and custom integrations.
           </p>
+        </div>
+      </section>
+
+      {/* Assessment banner */}
+      <section className="px-4 pt-section sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-2xl border border-teal bg-teal/5 p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-8">
+            <div className="max-w-3xl">
+              <p className="text-caption font-bold uppercase tracking-wider text-teal">
+                Not sure which tier?
+              </p>
+              <h2 className="mt-2 text-h3 font-bold text-navy">
+                Start with a 90-day paid pilot (&euro;25,000)
+              </h2>
+              <p className="mt-3 text-body-sm text-medium-gray">
+                Expert-led fairness audit of up to 3 models, full compliance
+                reports across your target jurisdictions, and a mitigation
+                roadmap. 100% of the pilot fee is credited toward any annual
+                Professional or Enterprise contract signed within 12 months.
+              </p>
+            </div>
+            <div className="mt-6 shrink-0 lg:mt-0">
+              <Link
+                href="/contact?topic=assessment"
+                className="inline-block rounded-full bg-teal px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-teal-dark"
+              >
+                Request Assessment
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Pricing Tiers */}
       <section className="px-4 py-section sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-8 lg:grid-cols-3">
+          <div className={tierGridClass}>
             {tiers.map((tier) => (
               <div
                 key={tier.name}
-                className={`relative rounded-2xl border p-8 ${
+                className={`relative flex flex-col rounded-2xl border p-6 ${
                   tier.highlighted
                     ? "border-teal bg-navy text-white shadow-elevated"
                     : "border-light-gray bg-white shadow-card"
@@ -164,35 +296,45 @@ export default function PricingPage() {
                   </span>
                 )}
                 <h2
-                  className={`text-h3 font-bold ${tier.highlighted ? "text-white" : "text-navy"}`}
+                  className={`text-h3 font-bold ${
+                    tier.highlighted ? "text-white" : "text-navy"
+                  }`}
                 >
                   {tier.name}
                 </h2>
                 <p
-                  className={`mt-2 text-body-sm ${tier.highlighted ? "text-light-gray" : "text-medium-gray"}`}
+                  className={`mt-2 text-body-sm ${
+                    tier.highlighted ? "text-light-gray" : "text-medium-gray"
+                  }`}
                 >
                   {tier.description}
                 </p>
                 <div className="mt-6">
                   <span
-                    className={`text-h2 font-bold ${tier.highlighted ? "text-teal-light" : "text-navy"}`}
+                    className={`text-h2 font-bold ${
+                      tier.highlighted ? "text-teal-light" : "text-navy"
+                    }`}
                   >
                     {tier.price}
                   </span>
                   {tier.period && (
                     <span
-                      className={`ml-1 text-body-sm ${tier.highlighted ? "text-light-gray" : "text-medium-gray"}`}
+                      className={`ml-1 text-body-sm ${
+                        tier.highlighted ? "text-light-gray" : "text-medium-gray"
+                      }`}
                     >
                       {tier.period}
                     </span>
                   )}
                 </div>
 
-                <ul className="mt-8 space-y-3">
+                <ul className="mt-6 flex-1 space-y-3">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2">
                       <svg
-                        className={`mt-0.5 h-5 w-5 shrink-0 ${tier.highlighted ? "text-teal-light" : "text-teal"}`}
+                        className={`mt-0.5 h-5 w-5 shrink-0 ${
+                          tier.highlighted ? "text-teal-light" : "text-teal"
+                        }`}
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={2}
@@ -205,7 +347,9 @@ export default function PricingPage() {
                         />
                       </svg>
                       <span
-                        className={`text-body-sm ${tier.highlighted ? "text-light-gray" : "text-medium-gray"}`}
+                        className={`text-body-sm ${
+                          tier.highlighted ? "text-light-gray" : "text-medium-gray"
+                        }`}
                       >
                         {feature}
                       </span>
@@ -219,9 +363,9 @@ export default function PricingPage() {
                   </p>
                 )}
 
-                <div className="mt-8">
+                <div className="mt-6">
                   <Link
-                    href="/contact"
+                    href={tier.ctaHref}
                     className={`block w-full rounded-full py-3 text-center text-sm font-semibold transition-colors ${
                       tier.highlighted
                         ? "bg-teal text-white hover:bg-teal-light"
@@ -234,30 +378,57 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+
+          {/* Notified Body row */}
+          <div className="mt-8 rounded-2xl border border-dashed border-navy/30 bg-off-white p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-8">
+            <div className="max-w-3xl">
+              <p className="text-caption font-bold uppercase tracking-wider text-navy">
+                Notified Body / OEM
+              </p>
+              <h3 className="mt-2 text-h4 font-bold text-navy">
+                White-label ParityScope for your assessments
+              </h3>
+              <p className="mt-3 text-body-sm text-medium-gray">
+                For Notified Bodies, regulatory consultancies, and EHR vendors
+                embedding fairness auditing into their service offering.
+                Includes white-labeling, per-assessment royalties, and
+                co-branded compliance reports.
+              </p>
+            </div>
+            <div className="mt-6 shrink-0 lg:mt-0">
+              <Link
+                href="/contact?topic=partnership"
+                className="inline-block rounded-full border border-navy px-6 py-3 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
+              >
+                Contact for Custom
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Feature Comparison */}
       <section className="bg-off-white px-4 py-section sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           <h2 className="text-center text-h2 font-bold text-navy">
             Feature Comparison
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-body-lg text-medium-gray">
-            A detailed look at what is included in each plan.
+            What&apos;s included at each tier.
           </p>
           <div className="mt-12 overflow-x-auto">
             <table className="w-full text-left text-body-sm">
               <thead>
                 <tr className="border-b-2 border-navy/10">
-                  <th className="pb-4 pr-4 font-semibold text-navy">
-                    Feature
+                  <th className="pb-4 pr-4 font-semibold text-navy">Feature</th>
+                  <th className="pb-4 px-4 text-center font-semibold text-navy">
+                    Developer
                   </th>
                   <th className="pb-4 px-4 text-center font-semibold text-navy">
-                    Assessment
+                    Team
                   </th>
                   <th className="pb-4 px-4 text-center font-semibold text-teal">
-                    SDK License
+                    Professional
                   </th>
                   <th className="pb-4 pl-4 text-center font-semibold text-navy">
                     Enterprise
@@ -274,10 +445,13 @@ export default function PricingPage() {
                       {row.feature}
                     </td>
                     <td className="py-3 px-4 text-center text-medium-gray">
-                      {row.assessment}
+                      {row.developer}
+                    </td>
+                    <td className="py-3 px-4 text-center text-medium-gray">
+                      {row.team}
                     </td>
                     <td className="py-3 px-4 text-center font-medium text-navy">
-                      {row.sdk}
+                      {row.professional}
                     </td>
                     <td className="py-3 pl-4 text-center text-medium-gray">
                       {row.enterprise}
@@ -317,11 +491,11 @@ export default function PricingPage() {
       {/* CTA */}
       <section className="bg-navy px-4 py-section text-white sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-h2 font-bold">Not Sure Which Plan Is Right?</h2>
+          <h2 className="text-h2 font-bold">Still deciding?</h2>
           <p className="mt-4 text-body-lg text-light-gray">
-            Talk to our team. We will help you choose the right plan based on
-            your organization&apos;s size, number of AI models, and regulatory
-            requirements.
+            Download the Developer tier to evaluate ParityScope on your own
+            data, or talk to sales about an Assessment pilot to de-risk a
+            larger commitment.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
@@ -334,7 +508,7 @@ export default function PricingPage() {
               href="/developers"
               className="rounded-full border border-white/30 px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-white/10"
             >
-              Try the SDK Free
+              Download Free SDK
             </Link>
           </div>
         </div>

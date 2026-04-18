@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Regulatory Landscape — AI Regulations Affecting Healthcare",
   description:
-    "Navigate the global AI regulatory landscape. Understand the EU AI Act, South Korea AI Framework Act, Taiwan AI Basic Law, and Section 1557 compliance requirements.",
+    "Navigate the global AI regulatory landscape in April 2026. EU AI Act under Digital Omnibus delay, FDA AI/ML guidance, NIST AI RMF, Section 1557 with private litigation enforcement, South Korea, and Taiwan.",
 };
 
 const regulations = [
@@ -12,11 +12,44 @@ const regulations = [
     flag: "\uD83C\uDDEA\uD83C\uDDFA",
     name: "EU AI Act",
     href: "/regulations/eu-ai-act",
-    status: "Enforcing",
-    statusColor: "bg-coral text-white",
-    dates: "Aug 2026 — full enforcement for high-risk AI systems; tiered rollout through 2027",
+    status: "Delayed",
+    statusColor: "bg-amber text-white",
+    dates:
+      "High-risk obligations expected to slip to Dec 2027 (Annex III) / Aug 2028 (medical device AI) under the Digital Omnibus",
     description:
-      "The world's most comprehensive AI regulation classifies healthcare AI as high-risk, requiring conformity assessments, bias testing, human oversight, and post-market monitoring. Non-compliance penalties reach up to \u20AC35 million or 7% of global annual turnover.",
+      "Regulation (EU) 2024/1689 still classifies healthcare AI as high-risk. The European Parliament voted 569-45 on 2026-03-23 to support postponement, harmonized standards remain missing, and a medical-device carve-out is under discussion. Penalties for high-risk violations are EUR 15M or 3% of global turnover under Article 99(4) — the EUR 35M / 7% tier applies only to prohibited AI.",
+  },
+  {
+    flag: "\uD83C\uDDFA\uD83C\uDDF8",
+    name: "FDA AI/ML Devices",
+    href: "/regulations/fda",
+    status: "Voluntary best practice",
+    statusColor: "bg-teal text-white",
+    dates:
+      "GMLP (Oct 2021), PCCP final (Dec 2024), draft guidance on FY2026 B list",
+    description:
+      "FDA regulates AI-enabled medical devices via 510(k), De Novo, and PMA. The 10 GMLP guiding principles co-issued with Health Canada and MHRA remain the operative framework. Commissioner Makary signaled deregulation at CES 2026 — but reviewers still expect Principle 8 subpopulation performance evidence in pre-submissions.",
+  },
+  {
+    flag: "\uD83C\uDDFA\uD83C\uDDF8",
+    name: "NIST AI RMF",
+    href: "/regulations/nist",
+    status: "Voluntary; widely cited",
+    statusColor: "bg-teal text-white",
+    dates: "AI RMF 1.0 (Jan 2023), GenAI Profile NIST-AI-600-1 (Jul 2024)",
+    description:
+      "Voluntary federal framework organized around GOVERN, MAP, MEASURE, MANAGE. Referenced by the Colorado AI Act (effective 2026-02-01), Texas RAIA, and federal procurement. Not rescinded by the current administration. The de-facto baseline state laws and contracts point to.",
+  },
+  {
+    flag: "\uD83C\uDDFA\uD83C\uDDF8",
+    name: "Section 1557 (ACA)",
+    href: "/regulations/section-1557",
+    status: "Litigation-driven",
+    statusColor: "bg-coral text-white",
+    dates:
+      "May 2025 deadline passed with zero OCR enforcement actions; private litigation is now the active mechanism",
+    description:
+      "The 2024 final rule at 45 CFR 92.210 covers clinical algorithms and AI. HHS OCR has been silent under the current administration; Florida v. HHS stayed unrelated parts of the rule. Real enforcement is private litigation — the UnitedHealth nH Predict case (court ordered algorithm disclosure Mar 2026) is the template plaintiffs are now following.",
   },
   {
     flag: "\uD83C\uDDF0\uD83C\uDDF7",
@@ -37,16 +70,6 @@ const regulations = [
     dates: "Dec 2025 — passed into law",
     description:
       "Taiwan's foundational AI legislation establishes governance principles for AI development and deployment across regulated industries. Sets requirements for fairness evaluation, transparency, and accountability in healthcare AI applications used in the national health system.",
-  },
-  {
-    flag: "\uD83C\uDDFA\uD83C\uDDF8",
-    name: "Section 1557 (ACA)",
-    href: "/regulations/section-1557",
-    status: "Active",
-    statusColor: "bg-green text-white",
-    dates: "Active — enforcement ongoing under HHS OCR",
-    description:
-      "The Affordable Care Act's anti-discrimination provision now explicitly covers clinical algorithms and AI-driven decision tools. Healthcare organizations using AI that produces disparate outcomes based on race, sex, age, or disability face enforcement action and loss of federal funding.",
   },
 ];
 
@@ -79,9 +102,10 @@ export default function RegulationsPage() {
             Navigate the Global AI Regulatory Landscape
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-body-lg text-slate-300">
-            Healthcare AI is now regulated across multiple jurisdictions — each
-            with distinct requirements, timelines, and penalties. ParityScope
-            helps you stay compliant everywhere you operate.
+            Healthcare AI is regulated across multiple jurisdictions — each
+            with distinct requirements, timelines, and (in 2026) very
+            different enforcement realities. ParityScope helps you build the
+            evidence package that holds up wherever you operate.
           </p>
         </div>
       </section>
@@ -94,23 +118,34 @@ export default function RegulationsPage() {
               Why This Matters
             </p>
             <h2 className="mt-4 text-h2 font-bold text-navy">
-              Enforcement Is Here — Not Coming
+              Prepare Now — Regulators Will Catch Up
             </h2>
             <div className="mt-6 space-y-4 text-medium-gray">
               <p>
-                The regulatory window for voluntary AI fairness testing has
-                closed. South Korea and Taiwan have enacted AI governance laws.
-                The US is actively enforcing anti-discrimination requirements
-                against clinical algorithms under Section 1557. The EU AI Act
-                begins full enforcement for high-risk healthcare AI systems in
-                August 2026, with penalties reaching tens of millions of euros.
+                The April 2026 picture is one of postponed deadlines and
+                shifted enforcement modes. The European Parliament has voted
+                to delay high-risk EU AI Act obligations under the Digital
+                Omnibus. FDA&apos;s January 2025 draft guidance sits on the
+                FY2026 B list. HHS OCR has not opened a single AI-related
+                Section 1557 enforcement action since the May 2025 deadline
+                passed. Harmonized EU standards are still missing.
               </p>
               <p>
-                Organizations deploying clinical AI without systematic bias
-                testing now face legal liability, loss of federal funding,
-                market access restrictions, and reputational damage. The
-                question is no longer whether to comply, but how quickly you
-                can build a defensible compliance program.
+                None of that means the obligations have softened. EU
+                providers still need Article 10 bias examinations, Article 72
+                post-market monitoring, and Annex IV documentation when the
+                conformity-assessment queue forms. US covered entities still
+                face plaintiff discovery — the UnitedHealth nH Predict case
+                established that courts will order algorithm disclosure.
+                State AI laws (Colorado, Texas) point at NIST AI RMF as the
+                operational baseline. Korea and Taiwan are already in force.
+              </p>
+              <p>
+                The organizations that come out of 2026-2027 in the
+                strongest position are the ones building defensible evidence
+                packages now — before the deadlines land, before the
+                subpoena arrives, and before the notified-body queue gets
+                long.
               </p>
             </div>
           </div>
@@ -124,8 +159,8 @@ export default function RegulationsPage() {
             Key Regulations You Need to Know
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-body-lg text-medium-gray">
-            Four regulatory frameworks are shaping healthcare AI compliance
-            worldwide. Here is what each one requires.
+            Six frameworks now shape healthcare AI compliance worldwide. Here
+            is the current state of each.
           </p>
           <div className="mt-16 grid gap-10 md:grid-cols-2">
             {regulations.map((reg) => (
@@ -189,11 +224,13 @@ export default function RegulationsPage() {
       <section className="bg-navy px-4 py-section sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-h2 font-bold text-white">
-            Stay Ahead of Enforcement Deadlines
+            Build the Evidence Package Before You Need It
           </h2>
           <p className="mt-4 text-body-lg text-slate-300">
-            Start your compliance journey today. ParityScope can have your
-            first regulatory-grade fairness audit completed in under a week.
+            Whether your trigger is an EU notified body, an FDA pre-submission,
+            a state AI law, or a plaintiff&apos;s subpoena — the underlying
+            evidence is the same. ParityScope can have your first
+            regulatory-grade fairness audit completed in under a week.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link

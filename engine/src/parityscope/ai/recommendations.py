@@ -3,9 +3,10 @@
 Heuristic, context-aware models that augment ParityScope's rule-based
 recommendation pipeline:
 
-* :func:`rank_strategies_ml` re-orders mitigation strategies for a single
+* :func:`rank_strategies_scored` re-orders mitigation strategies for a single
   prioritized issue using disparity match, effort, root-cause alignment,
-  quick-win bonus, and (when available) historical effectiveness.
+  quick-win bonus, and (when available) historical effectiveness. Despite
+  the prior name, this is hand-coded weighted scoring — not a learned model.
 * :func:`track_mitigation_effectiveness` compares two audits to compute
   before/after disparity changes for a strategy that was applied.
 * :func:`generate_remediation_plan` sequences strategies across issues into
@@ -47,7 +48,7 @@ _POSTHOC_STRATEGY_IDS = {"MIT-001", "MIT-002", "MIT-009", "MIT-010"}
 
 
 # ---------------------------------------------------------------------------
-# 1. ML-augmented strategy re-ranking
+# 1. Heuristic weighted-score strategy re-ranking (not a learned model)
 # ---------------------------------------------------------------------------
 
 
@@ -151,17 +152,19 @@ def _score_strategy(
     return score
 
 
-def rank_strategies_ml(
+def rank_strategies_scored(
     issue: PrioritizedIssue,
     root_cause: RootCauseReport | None = None,
     store: MonitoringStore | None = None,
     model_name: str | None = None,
 ) -> list[MitigationStrategy]:
-    """Re-rank an issue's mitigation strategies using a heuristic ML scorer.
+    """Re-rank strategies using a heuristic weighted scoring model (not ML).
 
-    Each strategy is scored 0-100 across five components: disparity match,
-    effort, root-cause alignment, quick-win bonus, and (when a monitoring
-    store is provided) historical effectiveness.
+    This is NOT machine learning in the learned sense — the weights are
+    hand-coded and the five-component score is deterministic. The name
+    reflects that honestly. Each strategy is scored 0-100 across: disparity
+    match, effort, root-cause alignment, quick-win bonus, and (when a
+    monitoring store is provided) historical effectiveness.
 
     Args:
         issue: The prioritized issue whose ``mitigation_strategies`` are
@@ -428,10 +431,10 @@ def generate_remediation_plan(
 ) -> RemediationPlan:
     """Generate a sequenced, dependency-aware remediation plan.
 
-    For each issue (highest priority first) the best ML-ranked strategy is
-    selected. Strategies are then ordered by topological sort so that, e.g.,
-    calibration steps follow label-fix steps and post-hoc tweaks follow
-    proxy removal on the same metric.
+    For each issue (highest priority first) the best heuristic-scored
+    strategy is selected. Strategies are then ordered by topological sort
+    so that, e.g., calibration steps follow label-fix steps and post-hoc
+    tweaks follow proxy removal on the same metric.
 
     Args:
         issues: Prioritized issues from
@@ -471,7 +474,7 @@ def generate_remediation_plan(
     selections: list[tuple[PrioritizedIssue, MitigationStrategy]] = []
     selection_scores: list[float] = []
     for issue in sorted_issues:
-        ranked = rank_strategies_ml(issue, root_cause, store, model_name)
+        ranked = rank_strategies_scored(issue, root_cause, store, model_name)
         if not ranked:
             continue
         best = ranked[0]
@@ -914,6 +917,17 @@ def generate_executive_summary(
     )
 
 
+# ---------------------------------------------------------------------------
+# Backward-compatible aliases (deprecated — use ``rank_strategies_scored``)
+# ---------------------------------------------------------------------------
+
+#: Deprecated alias for :func:`rank_strategies_scored`. Retained for
+#: backward compatibility. The old name implied machine learning; the
+#: implementation is a hand-coded weighted scorer, so new code should use
+#: the honest name.
+rank_strategies_ml = rank_strategies_scored
+
+
 # Re-exports for callers that want a single import surface.
 __all__ = [
     "AuditResult",
@@ -933,5 +947,6 @@ __all__ = [
     "generate_remediation_plan",
     "get_mitigation_strategies",
     "rank_strategies_ml",
+    "rank_strategies_scored",
     "track_mitigation_effectiveness",
 ]

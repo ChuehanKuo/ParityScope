@@ -193,15 +193,15 @@ export default function AboutPage() {
               className="group rounded-2xl border border-light-gray p-8 transition-all hover:border-teal hover:shadow-card-hover"
             >
               <h3 className="text-h3 font-semibold text-navy transition-colors group-hover:text-teal">
-                Our Team
+                Founder&rsquo;s Note
               </h3>
               <p className="mt-3 text-body-sm text-medium-gray">
-                Meet the AI researchers, healthcare domain experts, and
-                engineers building the future of algorithmic fairness in
-                clinical AI.
+                An honest note on what we&rsquo;ve built, what we are not, and
+                where ParityScope is today. We would rather tell you where we
+                are than ship placeholders.
               </p>
               <span className="mt-4 inline-block text-body-sm font-semibold text-teal">
-                Meet the team &rarr;
+                Read the note &rarr;
               </span>
             </Link>
             <Link

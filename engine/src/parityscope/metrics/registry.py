@@ -56,6 +56,11 @@ def _build_registry() -> dict[str, MetricInfo]:
         specificity_parity,
         treatment_equality,
     )
+    from parityscope.metrics.threshold_free import (
+        auprc_parity,
+        auroc_parity,
+        calibration_slope_parity,
+    )
 
     metrics = [
         MetricInfo(
@@ -207,6 +212,36 @@ def _build_registry() -> dict[str, MetricInfo]:
             compute_fn=score_distribution_difference,
             clinical_relevance="Detects whether risk scores are distributed differently across groups",
             tags=("distribution",),
+        ),
+        MetricInfo(
+            name="auroc_parity",
+            display_name="AUROC Parity",
+            description="Discrimination performance (AUROC) equivalent across protected groups",
+            category=MetricCategory.CLASSIFICATION,
+            input_type=InputType.SCORE,
+            compute_fn=auroc_parity,
+            clinical_relevance="Critical for risk stratification and screening models where threshold is case-specific",
+            tags=("group_fairness", "threshold_free", "discrimination"),
+        ),
+        MetricInfo(
+            name="calibration_slope_parity",
+            display_name="Calibration Slope Parity",
+            description="Equal calibration slope/intercept across protected groups (logit-scale)",
+            category=MetricCategory.CALIBRATION,
+            input_type=InputType.SCORE,
+            compute_fn=calibration_slope_parity,
+            clinical_relevance="Detects over- or under-confidence that differs by group even when AUROC is identical",
+            tags=("calibration", "threshold_free"),
+        ),
+        MetricInfo(
+            name="auprc_parity",
+            display_name="AUPRC Parity",
+            description="Average precision (AUPRC) equivalent across protected groups",
+            category=MetricCategory.CLASSIFICATION,
+            input_type=InputType.SCORE,
+            compute_fn=auprc_parity,
+            clinical_relevance="Preferred over AUROC for rare outcomes (sepsis alerts, rare-disease screening) where positive class is highly imbalanced",
+            tags=("group_fairness", "threshold_free", "imbalanced_class"),
         ),
     ]
 

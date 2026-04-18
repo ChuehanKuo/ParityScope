@@ -237,6 +237,12 @@ def detect_changepoints(
 
     Uses the CUSUM algorithm by default. Requires at least 5 snapshots.
 
+    The baseline ``mu`` and ``sigma`` are estimated from a rolling window of
+    pre-changepoint observations rather than the full series — otherwise a
+    single large outlier inflates the global sigma and suppresses subsequent
+    detections. After each detected changepoint the CUSUM state is reset and
+    the baseline is re-estimated from the post-changepoint window.
+
     Args:
         snapshots: time-ordered list of ``MetricSnapshot`` for a single metric.
         method: change-point method (currently only ``cusum``).
@@ -257,17 +263,31 @@ def detect_changepoints(
     y = np.asarray([s.disparity for s in ordered], dtype=float)
     n = y.size
 
-    mu = float(np.mean(y))
-    sigma = float(np.std(y))
-    if sigma == 0.0:
-        sigma = 1.0
-    h = 5.0 * sigma
-    k = threshold * sigma / 2.0
+    # Rolling baseline window: use the first ``window_size`` points to
+    # estimate mu/sigma, so a single outlier does not dominate.
+    window_size = min(30, max(5, n // 2))
+
+    def _baseline(start: int) -> tuple[float, float, float, float]:
+        """Estimate mu, sigma, h, k from the window starting at ``start``."""
+        end = min(n, start + window_size)
+        window = y[start:end]
+        if window.size == 0:
+            window = y[start : start + 1] if start < n else y[:1]
+        mu_w = float(np.mean(window))
+        sigma_w = float(np.std(window))
+        if sigma_w == 0.0:
+            sigma_w = 1.0
+        h_w = 5.0 * sigma_w
+        k_w = threshold * sigma_w / 2.0
+        return mu_w, sigma_w, h_w, k_w
+
+    mu, sigma, h, k = _baseline(0)
 
     s_pos = 0.0
     s_neg = 0.0
     max_cusum = 0.0
     changepoints: list[ChangePointResult] = []
+    last_cp = 0  # index of previous changepoint (or 0 at start)
 
     for i in range(n):
         s_pos = max(0.0, s_pos + (y[i] - mu - k))
@@ -276,7 +296,7 @@ def detect_changepoints(
 
         if s_pos > h or s_neg > h:
             cp_idx = i
-            before = y[:cp_idx] if cp_idx > 0 else y[: cp_idx + 1]
+            before = y[last_cp:cp_idx] if cp_idx > last_cp else y[cp_idx : cp_idx + 1]
             after = y[cp_idx:]
             mean_before = float(np.mean(before))
             mean_after = float(np.mean(after))
@@ -295,10 +315,12 @@ def detect_changepoints(
                 )
             )
 
-            # Reset cumsums and continue scanning.
+            # Reset CUSUM state and re-estimate baseline from the post-cp window.
             s_pos = 0.0
             s_neg = 0.0
             max_cusum = 0.0
+            last_cp = cp_idx
+            mu, sigma, h, k = _baseline(cp_idx)
 
     return changepoints
 
@@ -392,12 +414,27 @@ def forecast_metric(
         [last_level + (h + 1) * last_trend for h in range(horizon)], dtype=float
     )
 
+    # Correct variance formula for Holt's linear trend forecast:
+    #   Var(y_hat[T+h]) = sigma^2 * (1 + sum_{j=1}^{h-1} (alpha + j*alpha*beta)^2)
+    # The previous formulation (z * SE * sqrt(h)) was only valid for simple
+    # exponential smoothing / random walks and underestimates variance for
+    # Holt with a non-zero trend smoother.
     residuals = y[1:] - fitted[1:]
-    se = float(np.std(residuals)) if residuals.size > 0 else 0.0
+    sigma_sq = float(np.var(residuals)) if residuals.size > 0 else 0.0
+
+    def _holt_variance(h_step: int) -> float:
+        if h_step <= 1:
+            return sigma_sq
+        total = sigma_sq
+        for j in range(1, h_step):
+            total += sigma_sq * (alpha + j * alpha * beta) ** 2
+        return total
 
     z = float(stats.norm.ppf(0.5 + confidence / 2.0))
-    horizons = np.arange(1, horizon + 1, dtype=float)
-    margins = z * se * np.sqrt(horizons)
+    margins = np.array(
+        [z * math.sqrt(_holt_variance(h_step)) for h_step in range(1, horizon + 1)],
+        dtype=float,
+    )
 
     lower = forecasts - margins
     upper = forecasts + margins

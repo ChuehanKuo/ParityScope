@@ -242,6 +242,32 @@ class TestChangePointDetection:
         with pytest.raises(ValueError, match="Unsupported method"):
             detect_changepoints(snapshots, method="bocp")
 
+    def test_cusum_rolling_sigma_robust_to_outlier(self):
+        """A single early outlier must not suppress later real changepoints.
+
+        Previously sigma was computed from the full series, so one big
+        outlier inflated sigma and raised the decision interval ``h``
+        enough to mask a subsequent genuine level shift. With a rolling
+        baseline window, sigma is estimated from the first N clean points
+        and does not absorb the outlier.
+        """
+        # One outlier at index 2, stable baseline otherwise, clear shift later.
+        disparities = (
+            [0.05, 0.05, 0.80, 0.05, 0.05, 0.04, 0.06, 0.05, 0.05, 0.04]
+            + [0.45, 0.46, 0.44, 0.47, 0.45, 0.46, 0.45, 0.46]
+        )
+        snapshots = _make_snapshots(disparities)
+        results = detect_changepoints(snapshots, threshold=0.5)
+
+        # At least one changepoint should be detected *after* the outlier —
+        # specifically in or after the genuine shift region (index >= 10).
+        assert len(results) >= 1
+        late_cps = [r for r in results if r.changepoint_index >= 8]
+        assert len(late_cps) >= 1, (
+            f"Rolling-sigma CUSUM should detect the genuine shift; "
+            f"got changepoints at indices {[r.changepoint_index for r in results]}"
+        )
+
 
 # ---------------------------------------------------------------------------
 # forecast_metric
@@ -296,6 +322,36 @@ class TestForecastMetric:
             result.forecast_lower, result.forecast_values, result.forecast_upper
         ):
             assert low <= val <= up
+
+    def test_holt_variance_grows_with_horizon(self):
+        """Forecast intervals must widen with horizon under Holt's variance.
+
+        The correct Holt forecast variance is
+            Var(y_hat[T+h]) = sigma^2 * (1 + sum_{j=1}^{h-1} (alpha+j*alpha*beta)^2)
+        which is strictly non-decreasing in ``h``. Earlier code used
+        ``z * SE * sqrt(h)`` (simple-smoothing variance), which also grows
+        but understates uncertainty when beta > 0. Either way, intervals
+        must widen over horizon — the key sanity check below.
+        """
+        # A noisy but trending series so residual variance is non-trivial
+        # and the point forecast actually moves (exercising the trend term).
+        rng = np.random.default_rng(123)
+        disparities = [float(0.05 + 0.01 * i + rng.normal(0, 0.01)) for i in range(15)]
+        snapshots = _make_snapshots(disparities)
+        result = forecast_metric(snapshots, horizon=6, breach_threshold=1.0)
+        assert result is not None
+
+        widths = [
+            up - low
+            for low, up in zip(result.forecast_lower, result.forecast_upper)
+        ]
+        # Non-decreasing widths (allow tiny rounding jitter from the 4-dp round).
+        for earlier, later in zip(widths, widths[1:]):
+            assert later >= earlier - 1e-6, (
+                f"Forecast band should widen with horizon; got widths {widths}"
+            )
+        # Strictly wider at horizon 6 than horizon 1 on a non-degenerate series.
+        assert widths[-1] > widths[0]
 
 
 # ---------------------------------------------------------------------------
